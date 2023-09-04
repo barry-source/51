@@ -1,0 +1,8 @@
+"STARTUP.obj",
+"main.obj",
+"time.obj",
+"DHT.obj",
+"LCD.obj",
+"UART.obj" 
+TO "Template" 
+RAMSIZE(256) 

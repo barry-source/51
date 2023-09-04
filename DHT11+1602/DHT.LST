@@ -1,0 +1,74 @@
+C51 COMPILER V9.52.0.0   DHT                                                               09/04/2023 12:32:19 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE DHT
+OBJECT MODULE PLACED IN DHT.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE DHT.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "DHT.h"
+   2          #include "time.h"
+   3          #include "reg52.h"
+   4          
+   5          sbit DHT = P3^3;
+   6          
+   7          char datas[5];
+   8          
+   9          void check_DHT() {
+  10   1        DHT = 1;
+  11   1        DHT = 0;
+  12   1        Delay30ms();
+  13   1        DHT = 1;
+  14   1        Delay60us();
+  15   1        while(DHT);
+  16   1      }
+  17          
+  18          void trigDHT() {
+  19   1        DHT = 1;
+  20   1        DHT = 0;
+  21   1        Delay30ms();
+  22   1        DHT = 1;
+  23   1        Delay60us();
+  24   1        while(DHT); // 80us拉低电平（DHT响应信息）
+  25   1        while(!DHT); //80us拉高电平（DHT拉高）
+  26   1        while(DHT); // 等待开始传输数据
+  27   1      }
+  28          
+  29          void receiveData() {
+  30   1        
+  31   1        char value;
+  32   1        char tmp;
+  33   1        int i, j;
+  34   1        for(i = 0; i < 5;i ++) {
+  35   2          for(j = 0; j < 8; j ++) {
+  36   3            while(!DHT); // 检测是否从50us的低电平拉高
+  37   3            Delay40us(); // 0 是26-28us， 1 是70us，选择中间值，另外40-26 < 50us,未越过数据开始的低电平范围
+  38   3            if(DHT == 1) {
+  39   4              value = 1;
+  40   4              while(DHT); // 检测到1 检测下一次数据
+  41   4            } else {
+  42   4              value = 0;
+  43   4            }
+  44   3            tmp <<= 1;
+  45   3            tmp += value;
+  46   3          }
+  47   2          datas[i] = tmp;
+  48   2        }
+  49   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    124    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.52.0.0   DHT                                                               09/04/2023 12:32:19 PAGE 2   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

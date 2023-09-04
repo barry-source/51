@@ -1,0 +1,102 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              09/04/2023 12:41:04 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include <string.h>
+   3          #include "time.h"
+   4          #include "DHT.h"
+   5          #include "LCD.h"
+   6          #include "UART.h"
+   7          
+   8          sbit led = P3^7;
+   9          
+  10          char temp[8];
+  11          char huma[8];
+  12          
+  13          void Build_Datas()
+  14          {
+  15   1        huma[0] = 'H';
+  16   1        huma[1] = datas[0]/10 + 0x30;
+  17   1        huma[2] = datas[0]%10 + 0x30;
+  18   1        huma[3] = '.';
+  19   1        huma[4] = datas[1]/10 + 0x30;
+  20   1        huma[5] = datas[1]%10 + 0x30;
+  21   1        huma[6] = '%';
+  22   1        huma[7] = '\0';
+  23   1        
+  24   1        temp[0] = 'T';
+  25   1        temp[1] = datas[2]/10 + 0x30;
+  26   1        temp[2] = datas[2]%10 + 0x30;
+  27   1        temp[3] = '.';
+  28   1        temp[4] = datas[3]/10 + 0x30;
+  29   1        temp[5] = datas[3]%10 + 0x30;
+  30   1        temp[6] = 'C';
+  31   1        temp[7] = '\0';
+  32   1        
+  33   1      }
+  34          
+  35          void main() {
+  36   1        char temp1[] = "hello everyone!"; 
+  37   1        char position = 0x80;
+  38   1        int i = 0;
+  39   1        
+  40   1        uart_init();
+  41   1        lcd_init();
+  42   1        
+  43   1        Delay1000ms();
+  44   1        Delay1000ms();
+  45   1        /*
+  46   1        write_cmd(position);
+  47   1        for(i = 0; i < 15;i ++) {
+  48   1          write_data(temp1[i]);
+  49   1          delay_ms(10);
+  50   1          
+  51   1        }
+  52   1        */
+  53   1        //check_DHT();
+  54   1        while(1) {
+  55   2          delay_ms(500);
+C51 COMPILER V9.52.0.0   MAIN                                                              09/04/2023 12:41:04 PAGE 2   
+
+  56   2          
+  57   2          trigDHT();
+  58   2          receiveData();
+  59   2          Build_Datas();
+  60   2          
+  61   2          sendString(huma);
+  62   2          sendString("\r\n");
+  63   2          sendString(temp);
+  64   2          sendString("\r\n");
+  65   2          
+  66   2          write_cmd(position);
+  67   2          for(i = 0; i < 7;i ++) {
+  68   3            write_data(huma[i]);
+  69   3          }
+  70   2          write_cmd(position + 0x40);
+  71   2          for(i = 0; i < 7;i ++) {
+  72   3            write_data(temp[i]);
+  73   3          }
+  74   2        }
+  75   1        
+  76   1        
+  77   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    309    ----
+   CONSTANT SIZE    =     19    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16      19
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
