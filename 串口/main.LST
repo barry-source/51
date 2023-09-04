@@ -1,0 +1,171 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              09/02/2023 21:30:56 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include <intrins.h>
+   3          #include <string.h>
+   4          
+   5          sfr AUXR = 0x8E;
+   6          sbit led = P3^7;
+   7          sbit led1 = P3^6;
+   8          char buffer[12];
+   9          
+  10          code char LJWL[]  = "AT+CWJAP=\"tsc000\",\"010203123\"\r\n";
+  11          code char LJFWQ[] = "AT+CIPSTART=\"TCP\",\"192.168.0.104\",8880\r\n"; 
+  12          
+  13          char TCMS[]  = "AT+CIPMODE=1\r\n";
+  14          char SJCS[]  = "AT+CIPSEND\r\n";
+  15          char RESET[] = "AT+RST\r\n";
+  16          
+  17          int AT_OK_Flag = 0;
+  18          int AT_Connect_OK_Flag = 0;
+  19          int failed = 0;
+  20          
+  21          void uart_init() {
+  22   1        AUXR = 0x01;
+  23   1        TMOD &= 0X0F;
+  24   1        TMOD |= 0X20;
+  25   1        SCON = 0X50;
+  26   1        TH1 = 0XFD;
+  27   1        TL1 = 0XFD;
+  28   1        TR1 = 1;
+  29   1        EA = 1;
+  30   1        ES = 1;
+  31   1      }
+  32          
+  33          void Delay1000ms()    //@11.0592MHz
+  34          {
+  35   1        unsigned char i, j, k;
+  36   1      
+  37   1        _nop_();
+  38   1        i = 8;
+  39   1        j = 1;
+  40   1        k = 243;
+  41   1        do
+  42   1        {
+  43   2          do
+  44   2          {
+  45   3            while (--k);
+  46   3          } while (--j);
+  47   2        } while (--i);
+  48   1      }
+  49          
+  50          void sendByte(char a) {
+  51   1        SBUF = a;
+  52   1        while(!TI);
+  53   1        TI = 0;
+  54   1      }
+  55          
+C51 COMPILER V9.52.0.0   MAIN                                                              09/02/2023 21:30:56 PAGE 2   
+
+  56          void sendString(char *a) {
+  57   1          char *p = a;
+  58   1          while(*p != '\0') {
+  59   2            sendByte(*p);
+  60   2            p ++;
+  61   2          }
+  62   1      }
+  63          
+  64          void connectWifi() {
+  65   1        Delay1000ms();
+  66   1        sendString(LJWL);
+  67   1        while(!AT_OK_Flag);
+  68   1        AT_OK_Flag = 0;
+  69   1        sendString(LJFWQ);
+  70   1        while(!AT_OK_Flag);
+  71   1        AT_OK_Flag = 0;
+  72   1        sendString(TCMS);
+  73   1        while(!AT_OK_Flag);
+  74   1        AT_OK_Flag = 0;
+  75   1        sendString(SJCS);
+  76   1        while(!AT_OK_Flag);
+  77   1      }
+  78          
+  79          
+  80          void main() {
+  81   1        uart_init();
+  82   1        label:
+  83   1        connectWifi();
+  84   1        if(AT_Connect_OK_Flag) {
+  85   2          led = 0;
+  86   2        } 
+  87   1        
+  88   1        if(AT_OK_Flag) {
+  89   2          led1 = 0;
+  90   2        }
+  91   1        while(1) {
+  92   2          if(failed) {
+  93   3            failed = 0;
+  94   3            goto label;
+  95   3          }
+  96   2          Delay1000ms();
+  97   2          sendString("jump");
+  98   2        }
+  99   1      }
+ 100          
+ 101          void UART_Handle() interrupt 4 {
+ 102   1        static i = 0;
+ 103   1        char temp;
+ 104   1        if(RI) {
+ 105   2          RI = 0;
+ 106   2          temp = SBUF;
+ 107   2          if(temp == 'W' || temp == 'O' || temp == 'L' || temp == 'F') {
+ 108   3            i = 0;
+ 109   3          }
+ 110   2          buffer[i++] = temp;
+ 111   2          if(buffer[0] == 'O' && buffer[1] == 'K') {
+ 112   3            AT_OK_Flag = 1;
+ 113   3            memset(buffer,'\0', 12);
+ 114   3          }
+ 115   2          if(buffer[0] == 'W' && buffer[5] == 'G') {
+ 116   3            AT_Connect_OK_Flag = 1;
+ 117   3            memset(buffer,'\0', 12);
+C51 COMPILER V9.52.0.0   MAIN                                                              09/02/2023 21:30:56 PAGE 3   
+
+ 118   3          }
+ 119   2          if(buffer[0] == 'L' && buffer[2] == '1') {
+ 120   3            led= 0;
+ 121   3            memset(buffer,'\0', 12);
+ 122   3          }
+ 123   2          if(buffer[0] == 'L' && buffer[2] == '0') {
+ 124   3            led= 1;
+ 125   3            memset(buffer,'\0', 12);
+ 126   3          }
+ 127   2          if(buffer[0] == 'F' && buffer[1] == 'A'){
+ 128   3              for(i=0;i<5;i++){
+ 129   4                led = 0;
+ 130   4                Delay1000ms();
+ 131   4                led = 1;
+ 132   4                Delay1000ms();
+ 133   4              }
+ 134   3              failed = 1;
+ 135   3              AT_OK_Flag = 0;
+ 136   3              AT_Connect_OK_Flag =0;
+ 137   3              sendString(RESET);
+ 138   3              memset(buffer, '\0', 12);
+ 139   3            }
+ 140   2          if (i >= 12) {
+ 141   3            i = 0;
+ 142   3          }
+ 143   2        }
+ 144   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    516    ----
+   CONSTANT SIZE    =     78    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     57    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
