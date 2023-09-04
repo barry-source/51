@@ -1,0 +1,250 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              09/01/2023 20:24:56 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include <intrins.h>
+   3          
+   4          
+   5          sbit pulse = P1^1; // sg90 signal
+   6          sbit trig = P1^5; // 超声波触发引脚
+   7          sbit echo = P1^6; // 超声波回应引脚
+   8          
+   9          sbit beep = P2^0; // 蜂鸣器
+  10          sbit key = P2^1;  // 按键
+  11          sbit vibrateData = P3^2; // 振动DO口（hm-sensor）
+  12          sbit led2 = P3^6; // 蓝灯
+  13          sbit led1 = P3^7; // 黄灯
+  14          
+  15          int cnt = 0;
+  16          int phase = 1;
+  17          int vibrate;
+  18          
+  19          void Delay2000ms()    //@11.0592MHz
+  20          {
+  21   1        unsigned char i, j, k;
+  22   1      
+  23   1        i = 15;
+  24   1        j = 2;
+  25   1        k = 235;
+  26   1        do
+  27   1        {
+  28   2          do
+  29   2          {
+  30   3            while (--k);
+  31   3          } while (--j);
+  32   2        } while (--i);
+  33   1      }
+  34          
+  35          void Delay200ms()   //@11.0592MHz
+  36          {
+  37   1        unsigned char i, j, k;
+  38   1      
+  39   1        _nop_();
+  40   1        i = 2;
+  41   1        j = 103;
+  42   1        k = 147;
+  43   1        do
+  44   1        {
+  45   2          do
+  46   2          {
+  47   3            while (--k);
+  48   3          } while (--j);
+  49   2        } while (--i);
+  50   1      }
+  51          
+  52          void Delay150ms()   //@11.0592MHz
+  53          {
+  54   1        unsigned char i, j, k;
+  55   1      
+C51 COMPILER V9.52.0.0   MAIN                                                              09/01/2023 20:24:56 PAGE 2   
+
+  56   1        i = 2;
+  57   1        j = 13;
+  58   1        k = 237;
+  59   1        do
+  60   1        {
+  61   2          do
+  62   2          {
+  63   3            while (--k);
+  64   3          } while (--j);
+  65   2        } while (--i);
+  66   1      }
+  67          
+  68          
+  69          void Delay300ms()   //@11.0592MHz
+  70          {
+  71   1        unsigned char i, j, k;
+  72   1      
+  73   1        i = 3;
+  74   1        j = 26;
+  75   1        k = 223;
+  76   1        do
+  77   1        {
+  78   2          do
+  79   2          {
+  80   3            while (--k);
+  81   3          } while (--j);
+  82   2        } while (--i);
+  83   1      }
+  84          
+  85          void Delay10us()    //@11.0592MHz
+  86          {
+  87   1        unsigned char i;
+  88   1      
+  89   1        i = 2;
+  90   1        while (--i);
+  91   1      }
+  92          
+  93          
+  94          ////////////////舵机/////////////////////////
+  95          void sg90Init() {
+  96   1        Delay300ms();
+  97   1        TMOD &= 0XF0;
+  98   1        TMOD |= 0X01;
+  99   1        TL0 = 0X33;
+ 100   1        TH0 = 0XFE;
+ 101   1        TR0 = 1;
+ 102   1        ET0 = 1;
+ 103   1        EA = 1;
+ 104   1      }
+ 105          
+ 106          /////////////////振动/////////////////////////
+ 107          void initExInt0() {
+ 108   1        IT0 = 0; // 低电平触发
+ 109   1        EX0 = 1; // 开启外部中断0
+ 110   1      }
+ 111          
+ 112          /////////////////蜂鸣器/////////////////////////
+ 113          void beep300ms() {
+ 114   1        int n;
+ 115   1        beep = 0;
+ 116   1        for(n=0;n<2;n++)
+ 117   1          Delay150ms();
+C51 COMPILER V9.52.0.0   MAIN                                                              09/01/2023 20:24:56 PAGE 3   
+
+ 118   1        beep = 1;
+ 119   1      }
+ 120          
+ 121          /////////////////led/////////////////////////
+ 122          void ledStatusWhenOpend() {
+ 123   1        led1 = 1;
+ 124   1        led2 = 0;
+ 125   1      }
+ 126          
+ 127          void ledStatusWhenClosed() {
+ 128   1        led1 = 0;
+ 129   1        led2 = 1;
+ 130   1      }
+ 131          
+ 132          /////////////////超声波/////////////////////////
+ 133          
+ 134          // 声波使用timer 1
+ 135          void initTimer1() {
+ 136   1        TMOD &= 0X0F;
+ 137   1        TMOD |= 0X10;
+ 138   1        TL1 = 0;
+ 139   1        TH1 = 0;
+ 140   1      }
+ 141          
+ 142          void uart_init() {
+ 143   1        TMOD &= 0X0F;
+ 144   1        TMOD |= 0X20;
+ 145   1        SCON = 0X40;
+ 146   1        TH1 = 0XFD;
+ 147   1        TL1 = 0XFD;
+ 148   1        TR1 = 1;
+ 149   1      }
+ 150          
+ 151          // 保持10us高电平
+ 152          void trigWave() {
+ 153   1        trig = 0;
+ 154   1        trig = 1;
+ 155   1        Delay10us();
+ 156   1        trig = 0;
+ 157   1      }
+ 158          
+ 159          void startUltrasonicWave() {
+ 160   1        trigWave();
+ 161   1        while(echo == 0);
+ 162   1        TR1 = 1;
+ 163   1        while(echo == 1);
+ 164   1        TR1= 0;
+ 165   1      }
+ 166          
+ 167          double getDistance() {
+ 168   1        return (TH1 * 256 + TL1) * 1.085 * 0.017;
+ 169   1      }
+ 170          
+ 171          void main() {
+ 172   1        double distance;
+ 173   1        double lastPhase;
+ 174   1        initExInt0();
+ 175   1        sg90Init();
+ 176   1        initTimer1();
+ 177   1        while(1) {
+ 178   2          Delay200ms();
+ 179   2          startUltrasonicWave();
+C51 COMPILER V9.52.0.0   MAIN                                                              09/01/2023 20:24:56 PAGE 4   
+
+ 180   2          distance = getDistance();
+ 181   2          if (distance < 10 || !key || vibrate) {
+ 182   3            ledStatusWhenOpend();
+ 183   3            
+ 184   3            phase = 3;
+ 185   3            if(lastPhase != phase) {
+ 186   4              cnt = 0;
+ 187   4              beep300ms();
+ 188   4              Delay2000ms();
+ 189   4            }  
+ 190   3            
+ 191   3            vibrate  = 0;
+ 192   3          } else {
+ 193   3            ledStatusWhenClosed();
+ 194   3            phase = 1;
+ 195   3            cnt = 0;
+ 196   3            Delay150ms();
+ 197   3          }
+ 198   2          lastPhase = phase;
+ 199   2          TL1 = 0;
+ 200   2          TH1 = 0;
+ 201   2        }
+ 202   1      }
+ 203          
+ 204          void timer0_pwm() interrupt 1 {
+ 205   1        cnt ++;
+ 206   1        TL0 = 0X33;
+ 207   1        TH0 = 0XFE;
+ 208   1        if (cnt < phase) {
+ 209   2          pulse = 1;
+ 210   2        } else {
+ 211   2          pulse = 0;
+ 212   2        }
+ 213   1        if (cnt == 40) {
+ 214   2          pulse = 1;
+ 215   2          cnt = 0;
+ 216   2        }
+ 217   1      }
+ 218          
+ 219          void exteral0() interrupt 0 {
+ 220   1        vibrate = vibrateData;
+ 221   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    430    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
