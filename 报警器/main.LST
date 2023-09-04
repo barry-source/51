@@ -1,0 +1,173 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              08/31/2023 15:49:02 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include <intrins.h>
+   3          
+   4          sbit led1 = P3^7;
+   5          sbit led2 = P3^6;
+   6          sbit key1 = P2^1;
+   7          sbit key2 = P2^0;
+   8          sbit vibrate = P3^3;
+   9          sbit electriRelay = P1^1;
+  10          sbit wire1 = P1^2;
+  11          sbit wire2 = P1^3;
+  12           
+  13          int alarmOpened = 0;
+  14          
+  15          void Delay500ms()   //@11.0592MHz
+  16          {
+  17   1        unsigned char i, j, k;
+  18   1      
+  19   1        _nop_();
+  20   1        i = 4;
+  21   1        j = 129;
+  22   1        k = 119;
+  23   1        do
+  24   1        {
+  25   2          do
+  26   2          {
+  27   3            while (--k);
+  28   3          } while (--j);
+  29   2        } while (--i);   
+  30   1      }
+  31          
+  32          void Delay2000ms()    //@11.0592MHz
+  33          {
+  34   1        unsigned char i, j, k;
+  35   1      
+  36   1        _nop_();
+  37   1        i = 15;
+  38   1        j = 2;
+  39   1        k = 235;
+  40   1        do
+  41   1        {
+  42   2          do
+  43   2          {
+  44   3            while (--k);
+  45   3          } while (--j);
+  46   2        } while (--i);
+  47   1      }
+  48          
+  49          
+  50          void Delay100ms()   //@11.0592MHz
+  51          {
+  52   1        unsigned char i, j;
+  53   1      
+  54   1        i = 180;
+  55   1        j = 73;
+C51 COMPILER V9.52.0.0   MAIN                                                              08/31/2023 15:49:02 PAGE 2   
+
+  56   1        do
+  57   1        {
+  58   2          while (--j);
+  59   2        } while (--i);
+  60   1      }
+  61          
+  62          
+  63          /*
+  64          void twinking() {
+  65            while(1) {
+  66              led1 = 0;
+  67              Delay500ms();
+  68              led1 = 1;
+  69              Delay500ms();
+  70            }
+  71          }
+  72          */
+  73          
+  74          /*
+  75          void ledControledByKey() {
+  76            led1 = 1;
+  77            while(1) {
+  78              if (!key1) {
+  79                Delay100ms();
+  80                if(!key1) {
+  81                  led1 = !led1;
+  82                }
+  83              }
+  84            }
+  85          }
+  86          */
+  87          
+  88          void ledControledByVibration() {
+  89   1        while(1) {
+  90   2          if(!vibrate) {
+  91   3            led1 = 0;
+  92   3            Delay2000ms();
+  93   3            led1 = 1;
+  94   3          } else {
+  95   3            led1 = 1;
+  96   3          }
+  97   2        }
+  98   1      }
+  99          
+ 100          void electricRelayByVibration() {
+ 101   1        while(1) {
+ 102   2          if(!vibrate) {
+ 103   3            electriRelay = 0;
+ 104   3            Delay2000ms();
+ 105   3            electriRelay = 1;
+ 106   3          } else {
+ 107   3            electriRelay = 1;
+ 108   3          }
+ 109   2        }
+ 110   1      }
+ 111          
+ 112          void relayControlledByWireless() {
+ 113   1        while(1) {
+ 114   2          if(wire1) {
+ 115   3            electriRelay = 0;
+ 116   3          } 
+ 117   2          if(wire2){
+C51 COMPILER V9.52.0.0   MAIN                                                              08/31/2023 15:49:02 PAGE 3   
+
+ 118   3            electriRelay = 1;
+ 119   3          }
+ 120   2        }
+ 121   1      }
+ 122          
+ 123          void simpleAlarm() {
+ 124   1        while(1) {
+ 125   2          if(wire1) {
+ 126   3            electriRelay = 0;
+ 127   3            Delay2000ms();
+ 128   3            electriRelay = 1;
+ 129   3            alarmOpened = 1;
+ 130   3          }
+ 131   2          if(wire2) {
+ 132   3            electriRelay = 0;
+ 133   3            Delay500ms();
+ 134   3            electriRelay = 1;
+ 135   3            alarmOpened = 0;
+ 136   3          }
+ 137   2          if(alarmOpened) {
+ 138   3            electriRelay = vibrate;
+ 139   3          }
+ 140   2        }
+ 141   1      }
+ 142          
+ 143          
+ 144          void main() {
+ 145   1        simpleAlarm();
+ 146   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    127    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
