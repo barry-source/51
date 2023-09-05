@@ -1,4 +1,4 @@
-C51 COMPILER V9.52.0.0   MAIN                                                              09/04/2023 20:53:32 PAGE 1   
+C51 COMPILER V9.52.0.0   MAIN                                                              09/04/2023 22:06:33 PAGE 1   
 
 
 C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   53   2        }
   54   1      }
   55          
-C51 COMPILER V9.52.0.0   MAIN                                                              09/04/2023 20:53:32 PAGE 2   
+C51 COMPILER V9.52.0.0   MAIN                                                              09/04/2023 22:06:33 PAGE 2   
 
   56          void iic_write_cmd(char cmd) {
   57   1        iic_start();
@@ -126,7 +126,7 @@ line level    source
  115   1        
  116   1        iic_write_cmd(0xD9);//Set Pre-Charge Period
  117   1        iic_write_cmd(0xF1);//
-C51 COMPILER V9.52.0.0   MAIN                                                              09/04/2023 20:53:32 PAGE 3   
+C51 COMPILER V9.52.0.0   MAIN                                                              09/04/2023 22:06:33 PAGE 3   
 
  118   1        
  119   1        iic_write_cmd(0xDA);//set com pin configuartion
