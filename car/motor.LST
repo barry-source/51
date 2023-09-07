@@ -1,0 +1,89 @@
+C51 COMPILER V9.52.0.0   MOTOR                                                             09/06/2023 22:09:04 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MOTOR
+OBJECT MODULE PLACED IN motor.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE motor.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "motor.h"
+   2          #include "reg52.h"
+   3          
+   4          sbit rightA1 = P3^2; // 向后
+   5          sbit rightA2 = P3^3; // 向前
+   6          sbit leftB1 = P3^4;  // 向后
+   7          sbit leftB2 = P3^5;  // 向前
+   8          
+   9          void forward() {
+  10   1        rightA1 = 0;
+  11   1        rightA2 = 1;
+  12   1        leftB1 = 0;
+  13   1        leftB2 = 1;
+  14   1      }
+  15          
+  16          void backward() {
+  17   1        rightA1 = 1;
+  18   1        rightA2 = 0;
+  19   1        leftB1 = 1;
+  20   1        leftB2 = 0;
+  21   1      }
+  22          
+  23          // 前左
+  24          void leftward() {
+  25   1        rightA1 = 0;
+  26   1        rightA2 = 1;
+  27   1        leftB1 = 0;
+  28   1        leftB2 = 0;
+  29   1      }
+  30          
+  31          // 前右
+  32          void rightward() {
+  33   1        rightA1 = 0;
+  34   1        rightA2 = 0;
+  35   1        leftB1 = 0;
+  36   1        leftB2 = 1;
+  37   1      }
+  38          
+  39          void stop() {
+  40   1        rightA1 = 0;
+  41   1        rightA2 = 0;
+  42   1        leftB1 = 0;
+  43   1        leftB2 = 0;
+  44   1      }
+  45          
+  46          void leftForward() {
+  47   1        leftB1 = 0;
+  48   1        leftB2 = 1;
+  49   1      }
+  50          
+  51          void leftStop() {
+  52   1        leftB1 = 0;
+  53   1        leftB2 = 0;
+  54   1      }
+  55          
+C51 COMPILER V9.52.0.0   MOTOR                                                             09/06/2023 22:09:04 PAGE 2   
+
+  56          void rightForward() {
+  57   1        rightA1 = 0;
+  58   1        rightA2 = 1;
+  59   1      }
+  60          
+  61          void rightStop() {
+  62   1        rightA1 = 0;
+  63   1        rightA2 = 0;
+  64   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     65    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

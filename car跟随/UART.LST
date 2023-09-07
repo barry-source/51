@@ -1,0 +1,100 @@
+C51 COMPILER V9.52.0.0   UART                                                              09/06/2023 23:24:45 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN UART.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE UART.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "UART.h"
+   2          #include "reg52.h"
+   3          #include "motor.h"
+   4          #include <string.h>
+   5          
+   6          #define SIZE 12
+   7          
+   8          sbit AUXR = 0X8E;
+   9          
+  10          char buffer[SIZE];
+  11          
+  12          void sendByte(char a) {
+  13   1        SBUF = a;
+  14   1        while(!TI);
+  15   1        TI = 0;
+  16   1      }
+  17          
+  18          void sendString(char *a) {
+  19   1          char *p = a;
+  20   1          while(*p != '\0') {
+  21   2            sendByte(*p);
+  22   2            p ++;
+  23   2          }
+  24   1      }
+  25          
+  26          void uart_init() {
+  27   1        AUXR = 0x01;
+  28   1        TMOD &= 0X0F;
+  29   1        TMOD |= 0X20;
+  30   1        SCON = 0X50;
+  31   1        TH1 = 0XFD;
+  32   1        TL1 = 0XFD;
+  33   1        TR1 = 1;
+  34   1        EA = 1;
+  35   1        ES = 1;
+  36   1      }
+  37          
+  38          void UART_Handle() interrupt 4 {
+  39   1        static i = 0;
+  40   1        char temp;
+  41   1        if(RI) {
+  42   2          RI = 0;
+  43   2          temp = SBUF;
+  44   2          if(temp == 'm') {
+  45   3            i = 0;
+  46   3            memset(buffer, '\0', 12);
+  47   3          }
+  48   2          buffer[i++] = temp;
+  49   2      
+  50   2          if(buffer[0] == 'm') {
+  51   3            switch(buffer[1]) {
+  52   4              case '1':
+  53   4                forward();
+  54   4                break;
+  55   4              case '2':
+C51 COMPILER V9.52.0.0   UART                                                              09/06/2023 23:24:45 PAGE 2   
+
+  56   4                backward();
+  57   4                break;
+  58   4              case '3':
+  59   4                leftwards();
+*** WARNING C206 IN LINE 59 OF UART.c: 'leftwards': missing function-prototype
+  60   4                break;
+  61   4              case '4':
+  62   4                rightward();
+  63   4                break;
+  64   4              default:
+  65   4                stop();
+  66   4                break;
+  67   4            }
+  68   3          }
+  69   2      
+  70   2          if (i >= SIZE) {
+  71   3            i = 0;
+  72   3          }
+  73   2        }
+  74   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    218    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

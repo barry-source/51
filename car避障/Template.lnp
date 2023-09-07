@@ -1,0 +1,10 @@
+"STARTUP.obj",
+"main.obj",
+"motor.obj",
+"UART.obj",
+"timer.obj",
+"hc04.obj",
+"sg90.obj",
+"time.obj" 
+TO "Template" 
+RAMSIZE(256) 

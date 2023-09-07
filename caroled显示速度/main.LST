@@ -1,0 +1,185 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              09/07/2023 22:06:36 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include "UART.h"
+   3          #include "timer.h"
+   4          #include "motor.h"
+   5          #include "hc04.h"
+   6          #include "sg90.h"
+   7          #include "time.h"
+   8          #include "detectSpeed.h"
+   9          #include "stdio.h"
+  10          #include "oled.h"
+  11          
+  12          sbit leftTracing = P2^7;
+  13          sbit rightTracing = P2^6;
+  14          sbit leftIdentify = P2^5;
+  15          sbit rightIdentify = P2^4;
+  16          sbit led = P3^6;
+  17          
+  18          #define MIDDLE 0
+  19          #define LEFT 1
+  20          #define RIGHT 2
+  21          
+  22          /*
+  23          void trace() {
+  24            timer0Init();
+  25            timer1Init();
+  26          
+  27            while(1) {
+  28              if(leftTracing == 0 && rightTracing == 0) {
+  29                leftSpeed = Phase;
+  30                rightSpeed = Phase-10;
+  31                //forward();
+  32              }
+  33              
+  34              if(leftTracing == 1 && rightTracing == 0) {
+  35                leftSpeed = Phase - 70;
+  36                rightSpeed = Phase;
+  37                //leftward();
+  38              } 
+  39              
+  40              if(leftTracing == 0 && rightTracing == 1) {
+  41                leftSpeed = Phase;
+  42                rightSpeed = Phase - 70;
+  43                //rightward();
+  44              }
+  45              
+  46              if(leftTracing == 1 && rightTracing == 1) {
+  47                stop();
+  48              }
+  49              
+  50            }
+  51          }
+  52          
+  53          
+  54          void identify() {
+  55            while(1) {
+C51 COMPILER V9.52.0.0   MAIN                                                              09/07/2023 22:06:36 PAGE 2   
+
+  56              if(leftIdentify == 0 && rightIdentify == 0) {
+  57                forward();
+  58              }
+  59              
+  60              if(leftIdentify == 1 && rightIdentify == 0) {
+  61                rightward();
+  62              } 
+  63              
+  64              if(leftIdentify == 0 && rightIdentify == 1) {
+  65                leftward();
+  66              }
+  67              
+  68              if(leftIdentify == 1 && rightIdentify == 1) {
+  69                stop();
+  70              }
+  71              
+  72            }
+  73          }
+  74          
+  75          
+  76          void detect() {
+  77            double disLeft = 0;
+  78            double disMiddle = 0;
+  79            double disRight = 0;
+  80            
+  81            char dir;
+  82            sg90Init();
+  83            initTimer1();
+  84            
+  85            turn0degree();
+  86            Delay300ms();
+  87            Delay300ms();
+  88            dir = MIDDLE;
+  89          
+  90            while(1) {
+  91              if(dir != MIDDLE) {
+  92                dir = MIDDLE;
+  93                turn90degree();
+  94                Delay300ms();
+  95              }
+  96              disMiddle = getDistanceByUltrasonicWave();
+  97              
+  98              if(disMiddle > 35) {
+  99                forward();
+ 100              } else if(disMiddle < 10) {
+ 101                backward();
+ 102              } else {
+ 103                stop();
+ 104                turn180degree();
+ 105                Delay300ms();
+ 106                disLeft = getDistanceByUltrasonicWave();
+ 107                
+ 108                turn90degree();
+ 109                Delay300ms();
+ 110                
+ 111                turn0degree();
+ 112                dir = RIGHT;
+ 113                Delay300ms();
+ 114                disRight = getDistanceByUltrasonicWave();
+ 115                
+ 116                if(disLeft < disRight) {
+ 117                  rightward();
+C51 COMPILER V9.52.0.0   MAIN                                                              09/07/2023 22:06:36 PAGE 3   
+
+ 118                  Delay150ms();
+ 119                  stop();
+ 120                } 
+ 121                if(disLeft > disRight){
+ 122                  leftward();
+ 123                  Delay150ms();
+ 124                  stop();
+ 125                }
+ 126              }
+ 127            }
+ 128          }
+ 129          */
+ 130          
+ 131          
+ 132          /*
+ 133          
+ 134          
+ 135          */
+ 136          
+ 137          void main() {
+ 138   1        char speedString[24];
+ 139   1        
+ 140   1        initExt0();
+ 141   1        uart_init();
+ 142   1        timer0Init();
+ 143   1        
+ 144   1        //test();
+ 145   1        oled_init();
+ 146   1        oled_clear();
+ 147   1        while(1) {
+ 148   2          if(overflow) {
+ 149   3            overflow = 0;
+ 150   3            sprintf(speedString, "speed:%3d cm/s", speed);
+ 151   3            sendString(speedString);
+ 152   3            Oled_Show_Str(2, 0, speedString);
+ 153   3          }
+ 154   2        }
+ 155   1      }
+ 156          
+ 157          
+ 158          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     73    ----
+   CONSTANT SIZE    =     15    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      24
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,792 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        09/07/2023  16:27:36  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\PROGRAM FILES (X86)\KEILC51\C51\BIN\BL51.EXE STARTUP.obj, main.obj, motor.obj, UART.obj, timer.obj, hc04.obj, sg90.ob
+>> j, time.obj TO Template RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  main.obj (MAIN)
+  motor.obj (MOTOR)
+  UART.obj (UART)
+  timer.obj (TIMER)
+  hc04.obj (HC04)
+  sg90.obj (SG90)
+  time.obj (TIME)
+  D:\PROGRAM FILES (X86)\KEILC51\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  D:\PROGRAM FILES (X86)\KEILC51\C51\LIB\C51FPS.LIB (?C?FPCMP)
+  D:\PROGRAM FILES (X86)\KEILC51\C51\LIB\C51FPS.LIB (?C?FCAST)
+  D:\PROGRAM FILES (X86)\KEILC51\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  D:\PROGRAM FILES (X86)\KEILC51\C51\LIB\C51S.LIB (?C_INIT)
+  D:\PROGRAM FILES (X86)\KEILC51\C51\LIB\C51S.LIB (?C?CLDPTR)
+  D:\PROGRAM FILES (X86)\KEILC51\C51\LIB\C51S.LIB (?C?LNEG)
+  D:\PROGRAM FILES (X86)\KEILC51\C51\LIB\C51S.LIB (?C?MEMSET)
+
+
+LINK MAP OF MODULE:  Template (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000EH     UNIT         ?DT?UART
+            DATA    0016H     000EH     UNIT         _DATA_GROUP_
+            DATA    0024H     0008H     UNIT         ?DT?TIMER
+            DATA    002CH     0004H     UNIT         ?DT?SG90
+            IDATA   0030H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0008H     UNIT         ?PR?_SENDBYTE?UART
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0013H     UNIT         ?PR?_SENDSTRING?UART
+                    0021H     0002H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     025AH     UNIT         ?C?LIB_CODE
+            CODE    0280H     00E1H     UNIT         ?PR?MAIN?MAIN
+            CODE    0361H     00A7H     UNIT         ?PR?UART_HANDLE?UART
+            CODE    0408H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0494H     0043H     UNIT         ?PR?TIMER0_PWM?SG90
+            CODE    04D7H     001EH     UNIT         ?PR?GETDISTANCE?HC04
+            CODE    04F5H     001DH     UNIT         ?C_INITSEG
+            CODE    0512H     0018H     UNIT         ?PR?UART_INIT?UART
+            CODE    052AH     0013H     UNIT         ?PR?TIMER0INIT?TIMER
+            CODE    053DH     0013H     UNIT         ?PR?TIMER1INIT?TIMER
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 2
+
+
+            CODE    0550H     0013H     UNIT         ?PR?SG90INIT?SG90
+            CODE    0563H     000EH     UNIT         ?PR?STARTULTRASONICWAVE?HC04
+            CODE    0571H     000EH     UNIT         ?PR?DELAY200MS?TIME
+            CODE    057FH     000EH     UNIT         ?PR?DELAY150MS?TIME
+            CODE    058DH     000EH     UNIT         ?PR?DELAY300MS?TIME
+            CODE    059BH     000CH     UNIT         ?PR?INITTIMER1?HC04
+            CODE    05A7H     000CH     UNIT         ?PR?GETDISTANCEBYULTRASONICWAVE?HC04
+            CODE    05B3H     000AH     UNIT         ?PR?TRIGWAVE?HC04
+            CODE    05BDH     000AH     UNIT         ?PR?TURN90DEGREE?SG90
+            CODE    05C7H     0009H     UNIT         ?PR?FORWARD?MOTOR
+            CODE    05D0H     0009H     UNIT         ?PR?BACKWARD?MOTOR
+            CODE    05D9H     0009H     UNIT         ?PR?LEFTWARD?MOTOR
+            CODE    05E2H     0009H     UNIT         ?PR?RIGHTWARD?MOTOR
+            CODE    05EBH     0009H     UNIT         ?PR?STOP?MOTOR
+            CODE    05F4H     0009H     UNIT         ?PR?TURN0DEGREE?SG90
+            CODE    05FDH     0009H     UNIT         ?PR?TURN180DEGREE?SG90
+            CODE    0606H     0006H     UNIT         ?PR?RESET?SG90
+            CODE    060CH     0005H     UNIT         ?PR?LEFTFORWARD?MOTOR
+            CODE    0611H     0005H     UNIT         ?PR?LEFTSTOP?MOTOR
+            CODE    0616H     0005H     UNIT         ?PR?RIGHTFORWARD?MOTOR
+            CODE    061BH     0005H     UNIT         ?PR?RIGHTSTOP?MOTOR
+            CODE    0620H     0005H     UNIT         ?PR?DELAY10US?TIME
+
+
+
+OVERLAY MAP OF MODULE:   Template (?C_STARTUP)
+
+
+SEGMENT                                        DATA_GROUP 
+  +--> CALLED SEGMENT                        START    LENGTH
+------------------------------------------------------------
+?C_C51STARTUP                                -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                                0016H    000DH
+  +--> ?PR?SG90INIT?SG90
+  +--> ?PR?INITTIMER1?HC04
+  +--> ?PR?TURN90DEGREE?SG90
+  +--> ?PR?DELAY300MS?TIME
+  +--> ?PR?GETDISTANCEBYULTRASONICWAVE?HC04
+  +--> ?PR?FORWARD?MOTOR
+  +--> ?PR?BACKWARD?MOTOR
+  +--> ?PR?STOP?MOTOR
+  +--> ?PR?TURN180DEGREE?SG90
+  +--> ?PR?TURN0DEGREE?SG90
+  +--> ?PR?RIGHTWARD?MOTOR
+  +--> ?PR?DELAY150MS?TIME
+  +--> ?PR?LEFTWARD?MOTOR
+
+?PR?TURN90DEGREE?SG90                        -----    -----
+  +--> ?PR?RESET?SG90
+
+?PR?GETDISTANCEBYULTRASONICWAVE?HC04         -----    -----
+  +--> ?PR?STARTULTRASONICWAVE?HC04
+  +--> ?PR?GETDISTANCE?HC04
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 3
+
+
+?PR?STARTULTRASONICWAVE?HC04                 -----    -----
+  +--> ?PR?TRIGWAVE?HC04
+
+?PR?TRIGWAVE?HC04                            -----    -----
+  +--> ?PR?DELAY10US?TIME
+
+?PR?TURN180DEGREE?SG90                       -----    -----
+  +--> ?PR?RESET?SG90
+
+?PR?TURN0DEGREE?SG90                         -----    -----
+  +--> ?PR?RESET?SG90
+
+*** NEW ROOT ***************************************************
+
+?PR?UART_HANDLE?UART                         0023H    0001H
+  +--> ?PR?FORWARD?MOTOR
+  +--> ?PR?BACKWARD?MOTOR
+  +--> ?PR?LEFTWARD?MOTOR
+  +--> ?PR?RIGHTWARD?MOTOR
+  +--> ?PR?STOP?MOTOR
+
+
+
+SYMBOL TABLE OF MODULE:  Template (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0408H         SEGMENT       ?C_C51STARTUP
+  I:0030H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:040BH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0408H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0408H         LINE#         133
+  C:040AH         LINE#         134
+  C:040BH         LINE#         135
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 4
+
+
+  C:040CH         LINE#         136
+  C:040EH         LINE#         185
+  C:0411H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:0280H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:0016H         SYMBOL        disLeft
+  D:001AH         SYMBOL        disMiddle
+  D:001EH         SYMBOL        disRight
+  D:0022H         SYMBOL        dir
+  -------         ENDDO         
+  C:0280H         LINE#         73
+  C:0280H         LINE#         74
+  C:0289H         LINE#         75
+  C:0291H         LINE#         76
+  C:0299H         LINE#         79
+  C:029CH         LINE#         80
+  C:029FH         LINE#         82
+  C:02A2H         LINE#         83
+  C:02A5H         LINE#         84
+  C:02A8H         LINE#         85
+  C:02ABH         LINE#         87
+  C:02ABH         LINE#         88
+  C:02AFH         LINE#         89
+  C:02B2H         LINE#         90
+  C:02B5H         LINE#         91
+  C:02B8H         LINE#         92
+  C:02B8H         LINE#         93
+  C:02C3H         LINE#         95
+  C:02D9H         LINE#         96
+  C:02DCH         LINE#         97
+  C:02F2H         LINE#         98
+  C:02F5H         LINE#         99
+  C:02F7H         LINE#         100
+  C:02FAH         LINE#         101
+  C:02FDH         LINE#         102
+  C:0300H         LINE#         103
+  C:030BH         LINE#         105
+  C:030EH         LINE#         106
+  C:0311H         LINE#         108
+  C:0314H         LINE#         109
+  C:0317H         LINE#         110
+  C:031AH         LINE#         111
+  C:0325H         LINE#         113
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 5
+
+
+  C:0332H         LINE#         114
+  C:0335H         LINE#         115
+  C:0338H         LINE#         116
+  C:033BH         LINE#         117
+  C:033BH         LINE#         118
+  C:0355H         LINE#         119
+  C:0358H         LINE#         120
+  C:035BH         LINE#         121
+  C:035EH         LINE#         122
+  C:035EH         LINE#         123
+  C:035EH         LINE#         124
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        MOTOR
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  C:060CH         PUBLIC        leftForward
+  D:00A8H         PUBLIC        IE
+  B:00B0H.2       PUBLIC        rightA1
+  B:00B0H.3       PUBLIC        rightA2
+  D:00B8H         PUBLIC        IP
+  B:00B0H.4       PUBLIC        leftB1
+  B:00B0H.5       PUBLIC        leftB2
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:05D0H         PUBLIC        backward
+  C:05EBH         PUBLIC        stop
+  C:061BH         PUBLIC        rightStop
+  C:05E2H         PUBLIC        rightward
+  C:0611H         PUBLIC        leftStop
+  C:05D9H         PUBLIC        leftward
+  D:00C8H         PUBLIC        T2CON
+  C:05C7H         PUBLIC        forward
+  D:00D0H         PUBLIC        PSW
+  C:0616H         PUBLIC        rightForward
+  -------         PROC          FORWARD
+  C:05C7H         LINE#         9
+  C:05C7H         LINE#         10
+  C:05C9H         LINE#         11
+  C:05CBH         LINE#         12
+  C:05CDH         LINE#         13
+  C:05CFH         LINE#         14
+  -------         ENDPROC       FORWARD
+  -------         PROC          BACKWARD
+  C:05D0H         LINE#         16
+  C:05D0H         LINE#         17
+  C:05D2H         LINE#         18
+  C:05D4H         LINE#         19
+  C:05D6H         LINE#         20
+  C:05D8H         LINE#         21
+  -------         ENDPROC       BACKWARD
+  -------         PROC          LEFTWARD
+  C:05D9H         LINE#         24
+  C:05D9H         LINE#         25
+  C:05DBH         LINE#         26
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 6
+
+
+  C:05DDH         LINE#         27
+  C:05DFH         LINE#         28
+  C:05E1H         LINE#         29
+  -------         ENDPROC       LEFTWARD
+  -------         PROC          RIGHTWARD
+  C:05E2H         LINE#         32
+  C:05E2H         LINE#         33
+  C:05E4H         LINE#         34
+  C:05E6H         LINE#         35
+  C:05E8H         LINE#         36
+  C:05EAH         LINE#         37
+  -------         ENDPROC       RIGHTWARD
+  -------         PROC          STOP
+  C:05EBH         LINE#         39
+  C:05EBH         LINE#         40
+  C:05EDH         LINE#         41
+  C:05EFH         LINE#         42
+  C:05F1H         LINE#         43
+  C:05F3H         LINE#         44
+  -------         ENDPROC       STOP
+  -------         PROC          LEFTFORWARD
+  C:060CH         LINE#         46
+  C:060CH         LINE#         47
+  C:060EH         LINE#         48
+  C:0610H         LINE#         49
+  -------         ENDPROC       LEFTFORWARD
+  -------         PROC          LEFTSTOP
+  C:0611H         LINE#         51
+  C:0611H         LINE#         52
+  C:0613H         LINE#         53
+  C:0615H         LINE#         54
+  -------         ENDPROC       LEFTSTOP
+  -------         PROC          RIGHTFORWARD
+  C:0616H         LINE#         56
+  C:0616H         LINE#         57
+  C:0618H         LINE#         58
+  C:061AH         LINE#         59
+  -------         ENDPROC       RIGHTFORWARD
+  -------         PROC          RIGHTSTOP
+  C:061BH         LINE#         61
+  C:061BH         LINE#         62
+  C:061DH         LINE#         63
+  C:061FH         LINE#         64
+  -------         ENDPROC       RIGHTSTOP
+  -------         ENDMOD        MOTOR
+
+  -------         MODULE        UART
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:000EH         PUBLIC        _sendString
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 7
+
+
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:0088H.6       PUBLIC        AUXR
+  C:0003H         PUBLIC        _sendByte
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  C:0512H         PUBLIC        uart_init
+  B:0088H.6       PUBLIC        TR1
+  D:00C8H         PUBLIC        T2CON
+  C:0361H         PUBLIC        UART_Handle
+  D:00D0H         PUBLIC        PSW
+  D:000AH         PUBLIC        buffer
+  -------         PROC          _SENDBYTE
+  D:0007H         SYMBOL        a
+  C:0003H         LINE#         12
+  C:0003H         LINE#         13
+  C:0005H         LINE#         14
+  C:0008H         LINE#         15
+  C:000AH         LINE#         16
+  -------         ENDPROC       _SENDBYTE
+  -------         PROC          _SENDSTRING
+  D:0001H         SYMBOL        a
+  -------         DO            
+  D:0001H         SYMBOL        p
+  -------         ENDDO         
+  C:000EH         LINE#         18
+  C:000EH         LINE#         19
+  C:000EH         LINE#         20
+  C:0014H         LINE#         21
+  C:0017H         LINE#         22
+  C:001EH         LINE#         23
+  C:0020H         LINE#         24
+  -------         ENDPROC       _SENDSTRING
+  -------         PROC          UART_INIT
+  C:0512H         LINE#         26
+  C:0512H         LINE#         27
+  C:0514H         LINE#         28
+  C:0517H         LINE#         29
+  C:051AH         LINE#         30
+  C:051DH         LINE#         31
+  C:0520H         LINE#         32
+  C:0523H         LINE#         33
+  C:0525H         LINE#         34
+  C:0527H         LINE#         35
+  C:0529H         LINE#         36
+  -------         ENDPROC       UART_INIT
+  -------         PROC          UART_HANDLE
+  -------         DO            
+  D:0008H         SYMBOL        i
+  D:0023H         SYMBOL        temp
+  -------         ENDDO         
+  C:0361H         LINE#         38
+  C:037EH         LINE#         41
+  C:0381H         LINE#         42
+  C:0383H         LINE#         43
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 8
+
+
+  C:0386H         LINE#         44
+  C:038BH         LINE#         45
+  C:0391H         LINE#         46
+  C:03A0H         LINE#         47
+  C:03A0H         LINE#         48
+  C:03AEH         LINE#         50
+  C:03B3H         LINE#         51
+  C:03C3H         LINE#         52
+  C:03C3H         LINE#         53
+  C:03C6H         LINE#         54
+  C:03C8H         LINE#         55
+  C:03C8H         LINE#         56
+  C:03CBH         LINE#         57
+  C:03CDH         LINE#         58
+  C:03CDH         LINE#         59
+  C:03D0H         LINE#         60
+  C:03D2H         LINE#         61
+  C:03D2H         LINE#         62
+  C:03D5H         LINE#         63
+  C:03D7H         LINE#         64
+  C:03D7H         LINE#         65
+  C:03DAH         LINE#         66
+  C:03DAH         LINE#         67
+  C:03DAH         LINE#         68
+  C:03DAH         LINE#         70
+  C:03E7H         LINE#         71
+  C:03EDH         LINE#         72
+  C:03EDH         LINE#         73
+  C:03EDH         LINE#         74
+  -------         ENDPROC       UART_HANDLE
+  -------         ENDMOD        UART
+
+  -------         MODULE        TIMER
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  D:0024H         PUBLIC        rightSpeed
+  D:00B8H         PUBLIC        IP
+  D:0026H         PUBLIC        leftSpeed
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  D:008CH         PUBLIC        TH0
+  D:008DH         PUBLIC        TH1
+  D:008AH         PUBLIC        TL0
+  D:008BH         PUBLIC        TL1
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  D:00C8H         PUBLIC        T2CON
+  C:052AH         PUBLIC        timer0Init
+  C:053DH         PUBLIC        timer1Init
+  D:00D0H         PUBLIC        PSW
+  D:0028H         PUBLIC        timer0Cnt
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 9
+
+
+  D:002AH         PUBLIC        timer1Cnt
+  -------         PROC          TIMER0INIT
+  C:052AH         LINE#         11
+  C:052AH         LINE#         12
+  C:052DH         LINE#         13
+  C:0530H         LINE#         14
+  C:0533H         LINE#         15
+  C:0536H         LINE#         16
+  C:0538H         LINE#         17
+  C:053AH         LINE#         18
+  C:053CH         LINE#         19
+  -------         ENDPROC       TIMER0INIT
+  -------         PROC          TIMER1INIT
+  C:053DH         LINE#         21
+  C:053DH         LINE#         22
+  C:0540H         LINE#         23
+  C:0543H         LINE#         24
+  C:0546H         LINE#         25
+  C:0549H         LINE#         26
+  C:054BH         LINE#         27
+  C:054DH         LINE#         28
+  C:054FH         LINE#         29
+  -------         ENDPROC       TIMER1INIT
+  -------         ENDMOD        TIMER
+
+  -------         MODULE        HC04
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  B:00A0H.2       PUBLIC        echo
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  B:00A0H.3       PUBLIC        trig
+  D:008DH         PUBLIC        TH1
+  C:05B3H         PUBLIC        trigWave
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  D:00C8H         PUBLIC        T2CON
+  C:059BH         PUBLIC        initTimer1
+  C:05A7H         PUBLIC        getDistanceByUltrasonicWave
+  C:04D7H         PUBLIC        getDistance
+  C:0563H         PUBLIC        startUltrasonicWave
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          INITTIMER1
+  C:059BH         LINE#         9
+  C:059BH         LINE#         10
+  C:059EH         LINE#         11
+  C:05A1H         LINE#         12
+  C:05A4H         LINE#         13
+  C:05A6H         LINE#         14
+  -------         ENDPROC       INITTIMER1
+  -------         PROC          TRIGWAVE
+  C:05B3H         LINE#         29
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 10
+
+
+  C:05B3H         LINE#         30
+  C:05B5H         LINE#         31
+  C:05B7H         LINE#         32
+  C:05BAH         LINE#         33
+  C:05BCH         LINE#         34
+  -------         ENDPROC       TRIGWAVE
+  -------         PROC          STARTULTRASONICWAVE
+  C:0563H         LINE#         36
+  C:0563H         LINE#         37
+  C:0566H         LINE#         38
+  C:0569H         LINE#         39
+  C:056BH         LINE#         40
+  C:056EH         LINE#         41
+  C:0570H         LINE#         42
+  -------         ENDPROC       STARTULTRASONICWAVE
+  -------         PROC          GETDISTANCE
+  C:04D7H         LINE#         44
+  C:04D7H         LINE#         45
+  C:04F4H         LINE#         46
+  -------         ENDPROC       GETDISTANCE
+  -------         PROC          GETDISTANCEBYULTRASONICWAVE
+  C:05A7H         LINE#         48
+  C:05A7H         LINE#         49
+  C:05AAH         LINE#         50
+  C:05ACH         LINE#         51
+  C:05AFH         LINE#         52
+  C:05B2H         LINE#         53
+  -------         ENDPROC       GETDISTANCEBYULTRASONICWAVE
+  -------         ENDMOD        HC04
+
+  -------         MODULE        SG90
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  C:0494H         PUBLIC        timer0_pwm
+  D:00A8H         PUBLIC        IE
+  D:002CH         PUBLIC        phase
+  D:00B8H         PUBLIC        IP
+  C:0606H         PUBLIC        reset
+  C:05BDH         PUBLIC        turn90degree
+  B:0090H.1       PUBLIC        pulse
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:002EH         PUBLIC        cnt
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  C:05FDH         PUBLIC        turn180degree
+  B:0088H.4       PUBLIC        TR0
+  C:0550H         PUBLIC        sg90Init
+  D:00C8H         PUBLIC        T2CON
+  C:05F4H         PUBLIC        turn0degree
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          RESET
+  C:0606H         LINE#         8
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 11
+
+
+  C:0606H         LINE#         9
+  C:060BH         LINE#         12
+  -------         ENDPROC       RESET
+  -------         PROC          SG90INIT
+  C:0550H         LINE#         14
+  C:0550H         LINE#         15
+  C:0553H         LINE#         16
+  C:0556H         LINE#         17
+  C:0559H         LINE#         18
+  C:055CH         LINE#         19
+  C:055EH         LINE#         20
+  C:0560H         LINE#         21
+  C:0562H         LINE#         22
+  -------         ENDPROC       SG90INIT
+  -------         PROC          TURN0DEGREE
+  C:05F4H         LINE#         24
+  C:05F4H         LINE#         25
+  C:05FAH         LINE#         26
+  -------         ENDPROC       TURN0DEGREE
+  -------         PROC          TURN90DEGREE
+  C:05BDH         LINE#         29
+  C:05BDH         LINE#         30
+  C:05C0H         LINE#         31
+  C:05C6H         LINE#         32
+  -------         ENDPROC       TURN90DEGREE
+  -------         PROC          TURN180DEGREE
+  C:05FDH         LINE#         34
+  C:05FDH         LINE#         35
+  C:0603H         LINE#         36
+  -------         ENDPROC       TURN180DEGREE
+  -------         PROC          TIMER0_PWM
+  C:0494H         LINE#         39
+  C:049DH         LINE#         40
+  C:04A5H         LINE#         41
+  C:04A8H         LINE#         42
+  C:04ABH         LINE#         43
+  C:04BCH         LINE#         44
+  C:04BEH         LINE#         45
+  C:04C0H         LINE#         46
+  C:04C2H         LINE#         47
+  C:04C2H         LINE#         48
+  C:04CAH         LINE#         49
+  C:04CCH         LINE#         50
+  C:04D0H         LINE#         51
+  C:04D0H         LINE#         52
+  -------         ENDPROC       TIMER0_PWM
+  -------         ENDMOD        SG90
+
+  -------         MODULE        TIME
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0620H         PUBLIC        Delay10us
+  C:0571H         PUBLIC        Delay200ms
+  C:058DH         PUBLIC        Delay300ms
+  C:057FH         PUBLIC        Delay150ms
+  -------         PROC          DELAY10US
+  -------         DO            
+  D:0007H         SYMBOL        i
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 12
+
+
+  -------         ENDDO         
+  C:0620H         LINE#         4
+  C:0620H         LINE#         5
+  C:0620H         LINE#         8
+  C:0622H         LINE#         9
+  C:0624H         LINE#         10
+  -------         ENDPROC       DELAY10US
+  -------         PROC          DELAY200MS
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  D:0005H         SYMBOL        k
+  -------         ENDDO         
+  C:0571H         LINE#         12
+  C:0571H         LINE#         13
+  C:0571H         LINE#         16
+  C:0572H         LINE#         17
+  C:0574H         LINE#         18
+  C:0576H         LINE#         19
+  C:0578H         LINE#         21
+  C:0578H         LINE#         23
+  C:0578H         LINE#         24
+  C:057AH         LINE#         25
+  C:057CH         LINE#         26
+  C:057EH         LINE#         27
+  -------         ENDPROC       DELAY200MS
+  -------         PROC          DELAY150MS
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  D:0005H         SYMBOL        k
+  -------         ENDDO         
+  C:057FH         LINE#         29
+  C:057FH         LINE#         30
+  C:057FH         LINE#         33
+  C:0580H         LINE#         34
+  C:0582H         LINE#         35
+  C:0584H         LINE#         36
+  C:0586H         LINE#         38
+  C:0586H         LINE#         40
+  C:0586H         LINE#         41
+  C:0588H         LINE#         42
+  C:058AH         LINE#         43
+  C:058CH         LINE#         44
+  -------         ENDPROC       DELAY150MS
+  -------         PROC          DELAY300MS
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  D:0005H         SYMBOL        k
+  -------         ENDDO         
+  C:058DH         LINE#         46
+  C:058DH         LINE#         47
+  C:058DH         LINE#         50
+  C:058EH         LINE#         51
+  C:0590H         LINE#         52
+  C:0592H         LINE#         53
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 13
+
+
+  C:0594H         LINE#         55
+  C:0594H         LINE#         57
+  C:0594H         LINE#         58
+  C:0596H         LINE#         59
+  C:0598H         LINE#         60
+  C:059AH         LINE#         61
+  -------         ENDPROC       DELAY300MS
+  -------         ENDMOD        TIME
+
+  -------         MODULE        ?C?FPMUL
+  C:0026H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FPCMP
+  C:012EH         PUBLIC        ?C?FPCMP
+  C:012CH         PUBLIC        ?C?FPCMP3
+  -------         ENDMOD        ?C?FPCMP
+
+  -------         MODULE        ?C?FCAST
+  C:01AFH         PUBLIC        ?C?FCASTC
+  C:01AAH         PUBLIC        ?C?FCASTI
+  C:01A5H         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?CLDPTR
+  C:022DH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?LNEG
+  C:0246H         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+  -------         MODULE        ?C?MEMSET
+  C:0254H         PUBLIC        ?C?MEMSET
+  -------         ENDMOD        ?C?MEMSET
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LEFTFORWARD?MOTOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LEFTSTOP?MOTOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?RIGHTFORWARD?MOTOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?RIGHTSTOP?MOTOR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDSTRING?UART
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_INIT?UART
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TIMER0INIT?TIMER
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/07/2023  16:27:36  PAGE 14
+
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?TIMER1INIT?TIMER
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY200MS?TIME
+
+Program Size: data=49.0 xdata=0 code=1571
+LINK/LOCATE RUN COMPLETE.  9 WARNING(S),  0 ERROR(S)

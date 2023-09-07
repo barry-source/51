@@ -1,0 +1,153 @@
+C51 COMPILER V9.52.0.0   MAIN                                                              09/07/2023 16:27:36 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include "UART.h"
+   3          #include "timer.h"
+   4          #include "motor.h"
+   5          #include "hc04.h"
+   6          #include "sg90.h"
+   7          #include "time.h"
+   8          
+   9          sbit leftTracing = P2^7;
+  10          sbit rightTracing = P2^6;
+  11          sbit leftIdentify = P2^5;
+  12          sbit rightIdentify = P2^4;
+  13          
+  14          #define MIDDLE 0
+  15          #define LEFT 1
+  16          #define RIGHT 2
+  17          
+  18          /*
+  19          void trace() {
+  20            timer0Init();
+  21            timer1Init();
+  22          
+  23            while(1) {
+  24              if(leftTracing == 0 && rightTracing == 0) {
+  25                leftSpeed = Phase;
+  26                rightSpeed = Phase-10;
+  27                //forward();
+  28              }
+  29              
+  30              if(leftTracing == 1 && rightTracing == 0) {
+  31                leftSpeed = Phase - 70;
+  32                rightSpeed = Phase;
+  33                //leftward();
+  34              } 
+  35              
+  36              if(leftTracing == 0 && rightTracing == 1) {
+  37                leftSpeed = Phase;
+  38                rightSpeed = Phase - 70;
+  39                //rightward();
+  40              }
+  41              
+  42              if(leftTracing == 1 && rightTracing == 1) {
+  43                stop();
+  44              }
+  45              
+  46            }
+  47          }
+  48          
+  49          
+  50          void identify() {
+  51            while(1) {
+  52              if(leftIdentify == 0 && rightIdentify == 0) {
+  53                forward();
+  54              }
+  55              
+C51 COMPILER V9.52.0.0   MAIN                                                              09/07/2023 16:27:36 PAGE 2   
+
+  56              if(leftIdentify == 1 && rightIdentify == 0) {
+  57                rightward();
+  58              } 
+  59              
+  60              if(leftIdentify == 0 && rightIdentify == 1) {
+  61                leftward();
+  62              }
+  63              
+  64              if(leftIdentify == 1 && rightIdentify == 1) {
+  65                stop();
+  66              }
+  67              
+  68            }
+  69          }
+  70          
+  71          */
+  72          
+  73          void main() {
+  74   1        double disLeft = 0;
+  75   1        double disMiddle = 0;
+  76   1        double disRight = 0;
+  77   1        
+  78   1        char dir;
+  79   1        sg90Init();
+  80   1        initTimer1();
+  81   1        
+  82   1        turn90degree();
+  83   1        Delay300ms();
+  84   1        Delay300ms();
+  85   1        dir = MIDDLE;
+  86   1        
+  87   1        while(1) {
+  88   2          if(dir != MIDDLE) {
+  89   3            dir = MIDDLE;
+  90   3            turn90degree();
+  91   3            Delay300ms();
+  92   3          }
+  93   2          disMiddle = getDistanceByUltrasonicWave();
+  94   2          
+  95   2          if(disMiddle > 35) {
+  96   3            forward();
+  97   3          } else if(disMiddle < 10) {
+  98   3            backward();
+  99   3          } else {
+ 100   3            stop();
+ 101   3            turn180degree();
+ 102   3            Delay300ms();
+ 103   3            disLeft = getDistanceByUltrasonicWave();
+ 104   3            
+ 105   3            turn90degree();
+ 106   3            Delay300ms();
+ 107   3            
+ 108   3            turn0degree();
+ 109   3            dir = RIGHT;
+ 110   3            Delay300ms();
+ 111   3            disRight = getDistanceByUltrasonicWave();
+ 112   3            
+ 113   3            if(disLeft < disRight) {
+ 114   4              rightward();
+ 115   4              Delay150ms();
+ 116   4              stop();
+ 117   4            } 
+C51 COMPILER V9.52.0.0   MAIN                                                              09/07/2023 16:27:36 PAGE 3   
+
+ 118   3            if(disLeft > disRight){
+ 119   4              leftward();
+ 120   4              Delay150ms();
+ 121   4              stop();
+ 122   4            }
+ 123   3          }
+ 124   2        }
+ 125   1      }
+ 126          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    225    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      13
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

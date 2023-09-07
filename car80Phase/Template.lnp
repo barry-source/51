@@ -1,0 +1,7 @@
+"STARTUP.obj",
+"main.obj",
+"motor.obj",
+"UART.obj",
+"timer.obj" 
+TO "Template" 
+RAMSIZE(256) 

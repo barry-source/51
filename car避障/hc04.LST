@@ -1,0 +1,84 @@
+C51 COMPILER V9.52.0.0   HC04                                                              09/07/2023 16:21:15 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE HC04
+OBJECT MODULE PLACED IN hc04.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE hc04.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "hc04.h"
+   2          #include "reg52.h"
+   3          
+   4          sbit trig = P2^3; // 超声波触发引脚
+   5          sbit echo = P2^2; // 超声波回应引脚
+   6          
+   7          
+   8          // 声波使用timer 1
+   9          void initTimer1() {
+  10   1        TMOD &= 0X0F;
+  11   1        TMOD |= 0X10;
+  12   1        TL1 = 0;
+  13   1        TH1 = 0;
+  14   1      }
+  15          
+  16          /*
+  17          void uart_init() {
+  18            TMOD &= 0X0F;
+  19            TMOD |= 0X20;
+  20            SCON = 0X40;
+  21            TH1 = 0XFD;
+  22            TL1 = 0XFD;
+  23            TR1 = 1;
+  24          }
+  25          
+  26          */
+  27          
+  28          // 保持10us高电平
+  29          void trigWave() {
+  30   1        trig = 0;
+  31   1        trig = 1;
+  32   1        Delay10us();
+*** WARNING C206 IN LINE 32 OF hc04.c: 'Delay10us': missing function-prototype
+  33   1        trig = 0;
+  34   1      }
+  35          
+  36          void startUltrasonicWave() {
+  37   1        trigWave();
+  38   1        while(echo == 0);
+  39   1        TR1 = 1;
+  40   1        while(echo == 1);
+  41   1        TR1= 0;
+  42   1      }
+  43          
+  44          double getDistance() {
+  45   1        return (TH1 * 256 + TL1) * 1.085 * 0.017;
+  46   1      }
+  47          
+  48          double getDistanceByUltrasonicWave() {
+  49   1        TH1 = 0;
+  50   1        TL1 = 0;
+  51   1        startUltrasonicWave();
+  52   1        return getDistance();
+  53   1      }
+  54          
+C51 COMPILER V9.52.0.0   HC04                                                              09/07/2023 16:21:15 PAGE 2   
+
+  55          
+  56          
+  57          
+  58          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     78    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
