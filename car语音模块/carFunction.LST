@@ -1,0 +1,187 @@
+C51 COMPILER V9.52.0.0   CARFUNCTION                                                       09/08/2023 22:27:16 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE CARFUNCTION
+OBJECT MODULE PLACED IN carFunction.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE carFunction.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "carFunction.h"
+   2          #include "reg52.h"
+   3          #include "motor.h"
+   4          #include "sg90.h"
+   5          #include "timer.h"
+   6          #include "time.h"
+   7          #include "hc04.h"
+   8          #include "su03t.h"
+   9          #include "oled.h"
+  10          #include "UART.h"
+  11          
+  12          #define MIDDLE 0
+  13          #define LEFT 1
+  14          #define RIGHT 2
+  15          
+  16          //跟随
+  17          sbit leftFollow = P2^5;
+  18          sbit rightFollow = P2^4;
+  19          // 寻迹
+  20          sbit leftTracing = P2^7;
+  21          sbit rightTracing = P2^6;
+  22          
+  23          double disLeft = 0;
+  24          double disMiddle = 0;
+  25          double disRight = 0;
+  26          char dir = MIDDLE;
+  27          
+  28          enum Mode lastMode = stop;
+  29          
+  30          void follow() {
+  31   1          if(mode != lastMode) {
+  32   2            lastMode = mode;
+  33   2            oled_clear();
+  34   2            Oled_Show_Str(2, 0, "----follow----");
+  35   2          }
+  36   1          if(leftFollow == 0 && rightFollow == 0) {
+  37   2            forward();
+  38   2          }
+  39   1          
+  40   1          if(leftFollow == 1 && rightFollow == 0) {
+  41   2            rightward();
+  42   2          } 
+  43   1          
+  44   1          if(leftFollow == 0 && rightFollow == 1) {
+  45   2            leftward();
+  46   2          }
+  47   1          
+  48   1          if(leftFollow == 1 && rightFollow == 1) {
+  49   2            stop();
+  50   2          }
+  51   1      }
+  52          
+  53          void avoid() {  
+  54   1        if(mode != lastMode) {
+  55   2          lastMode = mode;
+C51 COMPILER V9.52.0.0   CARFUNCTION                                                       09/08/2023 22:27:16 PAGE 2   
+
+  56   2          oled_clear();
+  57   2          Oled_Show_Str(2, 0, "----avoid----");
+  58   2        }
+  59   1        if(dir != MIDDLE) {
+  60   2            dir = MIDDLE;
+  61   2            turn90degree();
+  62   2            Delay300ms();
+  63   2          }
+  64   1          disMiddle = getDistanceByUltrasonicWave();
+  65   1          
+  66   1          if(disMiddle > 35) {
+  67   2            forward();
+  68   2          } else if(disMiddle < 10) {
+  69   2            backward();
+  70   2          } else {
+  71   2            stop();
+  72   2            turn180degree();
+  73   2            Delay300ms();
+  74   2            disLeft = getDistanceByUltrasonicWave();
+  75   2            
+  76   2            turn90degree();
+  77   2            Delay300ms();
+  78   2            
+  79   2            turn0degree();
+  80   2            dir = RIGHT;
+  81   2            Delay300ms();
+  82   2            disRight = getDistanceByUltrasonicWave();
+  83   2            
+  84   2            if(disLeft < disRight) {
+  85   3              rightward();
+  86   3              Delay150ms();
+  87   3              stop();
+  88   3            } 
+  89   2            if(disLeft > disRight){
+  90   3              leftward();
+  91   3              Delay150ms();
+  92   3              stop();
+  93   3            }
+  94   2          }
+  95   1      }
+  96          
+  97          void traceing() {
+  98   1        if(mode != lastMode) {
+  99   2          lastMode = mode;
+ 100   2          oled_clear();
+ 101   2          Oled_Show_Str(2, 0, "----trace----");
+ 102   2        }
+ 103   1        
+ 104   1        if(leftTracing == 0 && rightTracing == 0) {
+ 105   2          /*
+ 106   2          leftSpeed = Phase;
+ 107   2          rightSpeed = Phase-10;
+ 108   2          */
+ 109   2          forward();
+ 110   2        }
+ 111   1        
+ 112   1        if(leftTracing == 1 && rightTracing == 0) {
+ 113   2          /*
+ 114   2          leftSpeed = Phase - 70;
+ 115   2          rightSpeed = Phase;
+ 116   2          */
+ 117   2          leftward();
+C51 COMPILER V9.52.0.0   CARFUNCTION                                                       09/08/2023 22:27:16 PAGE 3   
+
+ 118   2        } 
+ 119   1        
+ 120   1        if(leftTracing == 0 && rightTracing == 1) {
+ 121   2          /*
+ 122   2          leftSpeed = Phase;
+ 123   2          rightSpeed = Phase - 70;
+ 124   2          */
+ 125   2          rightward();
+ 126   2        }
+ 127   1        
+ 128   1        if(leftTracing == 1 && rightTracing == 1) {
+ 129   2          stop();
+ 130   2        }
+ 131   1      }
+ 132          
+ 133          
+ 134          void init() {
+ 135   1        
+ 136   1        // timer0(舵机，测速)
+ 137   1        timer0Init();
+ 138   1        // 避障
+ 139   1        timer1InitWithoutInterrupt();
+ 140   1        Delay300ms();
+ 141   1        Delay300ms();
+ 142   1        // 舵机转成正方向
+ 143   1        turn90degree();
+ 144   1        Delay300ms();
+ 145   1        oled_init();
+ 146   1        oled_clear();
+ 147   1        Oled_Show_Str(2, 0, "----ready----");
+ 148   1        //uart_init();
+ 149   1      }
+ 150          
+ 151          
+ 152          void timer0_handler() interrupt 1 {
+ 153   1        sg90_timer0();
+ 154   1      }
+ 155          
+ 156          /*
+ 157          void timer1_handler() interrupt 3 {
+ 158            
+ 159          }
+ 160          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    418    ----
+   CONSTANT SIZE    =     57    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

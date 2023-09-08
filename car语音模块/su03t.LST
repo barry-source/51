@@ -1,0 +1,51 @@
+C51 COMPILER V9.52.0.0   SU03T                                                             09/08/2023 22:27:16 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE SU03T
+OBJECT MODULE PLACED IN su03t.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE su03t.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "su03t.h"
+   2          #include "reg52.h"
+   3          
+   4          sbit a25 = P1^5;
+   5          sbit a26 = P1^6;
+   6          sbit a27 = P1^7;
+   7          
+   8          enum Mode mode = stopMode;
+   9          
+  10          enum Mode getMode() {
+  11   1        if(a25 == 0 && a26 == 1 && a27 == 1) {
+  12   2          mode = tracingMode;
+  13   2        }
+  14   1          
+  15   1        if(a25 == 1 && a26 == 0 && a27 == 1) {
+  16   2          mode = followMode;
+  17   2        }
+  18   1        
+  19   1        if(a25 == 1 && a26 == 1 && a27 == 0) {
+  20   2          mode = avoidMode;
+  21   2        }
+  22   1        
+  23   1        if(a25 == 0 && a26 == 0 && a27 == 0) {
+  24   2          mode = stopMode;
+  25   2        }
+  26   1        return mode;
+  27   1      }
+  28          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     51    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

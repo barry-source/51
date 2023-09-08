@@ -1,0 +1,84 @@
+C51 COMPILER V9.52.0.0   SG90                                                              09/08/2023 22:27:15 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE SG90
+OBJECT MODULE PLACED IN sg90.OBJ
+COMPILER INVOKED BY: D:\Program Files (x86)\keilc51\C51\BIN\C51.EXE sg90.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include "sg90.h"
+   3          
+   4          int cnt = 0;
+   5          int phase = 1;
+   6          sbit pulse = P1^1; // sg90 signal
+   7          
+   8          void reset() {
+   9   1        cnt = 0;
+  10   1      }
+  11          
+  12          // 初始化舵机也即timer0
+  13          
+  14          void turn0degree() {
+  15   1        phase = 1;
+  16   1        reset();
+  17   1      }
+  18          
+  19          void turn90degree() {
+  20   1        reset();
+  21   1        phase = 3;
+  22   1      }
+  23          
+  24          void turn180degree() {
+  25   1        phase = 5;
+  26   1        reset();
+  27   1      }
+  28          
+  29          void sg90_timer0() {
+  30   1        cnt ++;
+  31   1        TL0 = 0X33;
+  32   1        TH0 = 0XFE;
+  33   1        if (cnt < phase) {
+  34   2          pulse = 1;
+  35   2        } else {
+  36   2          pulse = 0;
+  37   2        }
+  38   1        if (cnt == 40) {
+  39   2          pulse = 1;
+  40   2          cnt = 0;
+  41   2        }
+  42   1      }
+  43          
+  44          /*
+  45          void timer0_pwm() interrupt 1 {
+  46            cnt ++;
+  47            TL0 = 0X33;
+  48            TH0 = 0XFE;
+  49            if (cnt < phase) {
+  50              pulse = 1;
+  51            } else {
+  52              pulse = 0;
+  53            }
+  54            if (cnt == 40) {
+  55              pulse = 1;
+C51 COMPILER V9.52.0.0   SG90                                                              09/08/2023 22:27:15 PAGE 2   
+
+  56              cnt = 0;
+  57            }
+  58          }
+  59          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     86    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

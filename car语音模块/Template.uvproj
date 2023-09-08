@@ -376,21 +376,6 @@
               <FileType>1</FileType>
               <FilePath>.\timer.c</FilePath>
             </File>
-            <File>
-              <FileName>hc04.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\hc04.c</FilePath>
-            </File>
-            <File>
-              <FileName>sg90.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sg90.c</FilePath>
-            </File>
-            <File>
-              <FileName>time.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\time.c</FilePath>
-            </File>
           </Files>
         </Group>
       </Groups>
