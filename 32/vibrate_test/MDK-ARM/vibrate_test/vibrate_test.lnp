@@ -1,0 +1,24 @@
+--cpu Cortex-M3
+"vibrate_test\startup_stm32f103xb.o"
+"vibrate_test\main.o"
+"vibrate_test\gpio.o"
+"vibrate_test\stm32f1xx_it.o"
+"vibrate_test\stm32f1xx_hal_msp.o"
+"vibrate_test\stm32f1xx_hal_gpio_ex.o"
+"vibrate_test\stm32f1xx_hal_tim.o"
+"vibrate_test\stm32f1xx_hal_tim_ex.o"
+"vibrate_test\stm32f1xx_hal.o"
+"vibrate_test\stm32f1xx_hal_rcc.o"
+"vibrate_test\stm32f1xx_hal_rcc_ex.o"
+"vibrate_test\stm32f1xx_hal_gpio.o"
+"vibrate_test\stm32f1xx_hal_dma.o"
+"vibrate_test\stm32f1xx_hal_cortex.o"
+"vibrate_test\stm32f1xx_hal_pwr.o"
+"vibrate_test\stm32f1xx_hal_flash.o"
+"vibrate_test\stm32f1xx_hal_flash_ex.o"
+"vibrate_test\stm32f1xx_hal_exti.o"
+"vibrate_test\system_stm32f1xx.o"
+--strict --scatter "vibrate_test\vibrate_test.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "vibrate_test.map" -o vibrate_test\vibrate_test.axf
