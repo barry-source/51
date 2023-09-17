@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"ultrasound_wave_led\startup_stm32f103xb.o"
+"ultrasound_wave_led\main.o"
+"ultrasound_wave_led\gpio.o"
+"ultrasound_wave_led\tim.o"
+"ultrasound_wave_led\stm32f1xx_it.o"
+"ultrasound_wave_led\stm32f1xx_hal_msp.o"
+"ultrasound_wave_led\stm32f1xx_hal_gpio_ex.o"
+"ultrasound_wave_led\stm32f1xx_hal_tim.o"
+"ultrasound_wave_led\stm32f1xx_hal_tim_ex.o"
+"ultrasound_wave_led\stm32f1xx_hal.o"
+"ultrasound_wave_led\stm32f1xx_hal_rcc.o"
+"ultrasound_wave_led\stm32f1xx_hal_rcc_ex.o"
+"ultrasound_wave_led\stm32f1xx_hal_gpio.o"
+"ultrasound_wave_led\stm32f1xx_hal_dma.o"
+"ultrasound_wave_led\stm32f1xx_hal_cortex.o"
+"ultrasound_wave_led\stm32f1xx_hal_pwr.o"
+"ultrasound_wave_led\stm32f1xx_hal_flash.o"
+"ultrasound_wave_led\stm32f1xx_hal_flash_ex.o"
+"ultrasound_wave_led\stm32f1xx_hal_exti.o"
+"ultrasound_wave_led\system_stm32f1xx.o"
+--strict --scatter "ultrasound_wave_led\ultrasound_wave_led.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "ultrasound_wave_led.map" -o ultrasound_wave_led\ultrasound_wave_led.axf

@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+".\dubin_32\startup_stm32f103xb.o"
+".\dubin_32\main.o"
+".\dubin_32\gpio.o"
+".\dubin_32\tim.o"
+".\dubin_32\stm32f1xx_it.o"
+".\dubin_32\stm32f1xx_hal_msp.o"
+".\dubin_32\stm32f1xx_hal_gpio_ex.o"
+".\dubin_32\stm32f1xx_hal_tim.o"
+".\dubin_32\stm32f1xx_hal_tim_ex.o"
+".\dubin_32\stm32f1xx_hal.o"
+".\dubin_32\stm32f1xx_hal_rcc.o"
+".\dubin_32\stm32f1xx_hal_rcc_ex.o"
+".\dubin_32\stm32f1xx_hal_gpio.o"
+".\dubin_32\stm32f1xx_hal_dma.o"
+".\dubin_32\stm32f1xx_hal_cortex.o"
+".\dubin_32\stm32f1xx_hal_pwr.o"
+".\dubin_32\stm32f1xx_hal_flash.o"
+".\dubin_32\stm32f1xx_hal_flash_ex.o"
+".\dubin_32\stm32f1xx_hal_exti.o"
+".\dubin_32\system_stm32f1xx.o"
+--strict --scatter ".\dubin_32\dubin_32.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "dubin_32.map" -o .\dubin_32\dubin_32.axf
