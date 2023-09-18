@@ -71,7 +71,6 @@ void openDusbin() {
 
 void closeDusbin() {
 	__HAL_TIM_SetCompare(&htim4, TIM_CHANNEL_4, 5);
-	opened = 0;
 	HAL_Delay(150);
 }
 
