@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"indenpent_wdg\startup_stm32f103xb.o"
+"indenpent_wdg\main.o"
+"indenpent_wdg\gpio.o"
+"indenpent_wdg\iwdg.o"
+"indenpent_wdg\usart.o"
+"indenpent_wdg\stm32f1xx_it.o"
+"indenpent_wdg\stm32f1xx_hal_msp.o"
+"indenpent_wdg\stm32f1xx_hal_gpio_ex.o"
+"indenpent_wdg\stm32f1xx_hal_iwdg.o"
+"indenpent_wdg\stm32f1xx_hal.o"
+"indenpent_wdg\stm32f1xx_hal_rcc.o"
+"indenpent_wdg\stm32f1xx_hal_rcc_ex.o"
+"indenpent_wdg\stm32f1xx_hal_gpio.o"
+"indenpent_wdg\stm32f1xx_hal_dma.o"
+"indenpent_wdg\stm32f1xx_hal_cortex.o"
+"indenpent_wdg\stm32f1xx_hal_pwr.o"
+"indenpent_wdg\stm32f1xx_hal_flash.o"
+"indenpent_wdg\stm32f1xx_hal_flash_ex.o"
+"indenpent_wdg\stm32f1xx_hal_exti.o"
+"indenpent_wdg\stm32f1xx_hal_tim.o"
+"indenpent_wdg\stm32f1xx_hal_tim_ex.o"
+"indenpent_wdg\stm32f1xx_hal_uart.o"
+"indenpent_wdg\system_stm32f1xx.o"
+--strict --scatter "indenpent_wdg\indenpent_wdg.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "indenpent_wdg.map" -o indenpent_wdg\indenpent_wdg.axf
