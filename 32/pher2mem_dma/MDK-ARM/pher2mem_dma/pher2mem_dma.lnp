@@ -1,0 +1,27 @@
+--cpu Cortex-M3
+"pher2mem_dma\startup_stm32f103xb.o"
+"pher2mem_dma\main.o"
+"pher2mem_dma\gpio.o"
+"pher2mem_dma\dma.o"
+"pher2mem_dma\usart.o"
+"pher2mem_dma\stm32f1xx_it.o"
+"pher2mem_dma\stm32f1xx_hal_msp.o"
+"pher2mem_dma\stm32f1xx_hal_gpio_ex.o"
+"pher2mem_dma\stm32f1xx_hal_tim.o"
+"pher2mem_dma\stm32f1xx_hal_tim_ex.o"
+"pher2mem_dma\stm32f1xx_hal_uart.o"
+"pher2mem_dma\stm32f1xx_hal.o"
+"pher2mem_dma\stm32f1xx_hal_rcc.o"
+"pher2mem_dma\stm32f1xx_hal_rcc_ex.o"
+"pher2mem_dma\stm32f1xx_hal_gpio.o"
+"pher2mem_dma\stm32f1xx_hal_dma.o"
+"pher2mem_dma\stm32f1xx_hal_cortex.o"
+"pher2mem_dma\stm32f1xx_hal_pwr.o"
+"pher2mem_dma\stm32f1xx_hal_flash.o"
+"pher2mem_dma\stm32f1xx_hal_flash_ex.o"
+"pher2mem_dma\stm32f1xx_hal_exti.o"
+"pher2mem_dma\system_stm32f1xx.o"
+--strict --scatter "pher2mem_dma\pher2mem_dma.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "pher2mem_dma.map" -o pher2mem_dma\pher2mem_dma.axf

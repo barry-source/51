@@ -1,0 +1,27 @@
+--cpu Cortex-M3
+"mem2mem_dma\startup_stm32f103xb.o"
+"mem2mem_dma\main.o"
+"mem2mem_dma\gpio.o"
+"mem2mem_dma\dma.o"
+"mem2mem_dma\usart.o"
+"mem2mem_dma\stm32f1xx_it.o"
+"mem2mem_dma\stm32f1xx_hal_msp.o"
+"mem2mem_dma\stm32f1xx_hal_gpio_ex.o"
+"mem2mem_dma\stm32f1xx_hal_tim.o"
+"mem2mem_dma\stm32f1xx_hal_tim_ex.o"
+"mem2mem_dma\stm32f1xx_hal_uart.o"
+"mem2mem_dma\stm32f1xx_hal.o"
+"mem2mem_dma\stm32f1xx_hal_rcc.o"
+"mem2mem_dma\stm32f1xx_hal_rcc_ex.o"
+"mem2mem_dma\stm32f1xx_hal_gpio.o"
+"mem2mem_dma\stm32f1xx_hal_dma.o"
+"mem2mem_dma\stm32f1xx_hal_cortex.o"
+"mem2mem_dma\stm32f1xx_hal_pwr.o"
+"mem2mem_dma\stm32f1xx_hal_flash.o"
+"mem2mem_dma\stm32f1xx_hal_flash_ex.o"
+"mem2mem_dma\stm32f1xx_hal_exti.o"
+"mem2mem_dma\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "mem2mem_dma\mem2mem_dma.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "mem2mem_dma.map" -o mem2mem_dma\mem2mem_dma.axf
