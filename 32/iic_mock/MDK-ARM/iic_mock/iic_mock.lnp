@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"iic_mock\startup_stm32f103xb.o"
+"iic_mock\iic.o"
+"iic_mock\main.o"
+"iic_mock\gpio.o"
+"iic_mock\stm32f1xx_it.o"
+"iic_mock\stm32f1xx_hal_msp.o"
+"iic_mock\stm32f1xx_hal_gpio_ex.o"
+"iic_mock\stm32f1xx_hal_tim.o"
+"iic_mock\stm32f1xx_hal_tim_ex.o"
+"iic_mock\stm32f1xx_hal.o"
+"iic_mock\stm32f1xx_hal_rcc.o"
+"iic_mock\stm32f1xx_hal_rcc_ex.o"
+"iic_mock\stm32f1xx_hal_gpio.o"
+"iic_mock\stm32f1xx_hal_dma.o"
+"iic_mock\stm32f1xx_hal_cortex.o"
+"iic_mock\stm32f1xx_hal_pwr.o"
+"iic_mock\stm32f1xx_hal_flash.o"
+"iic_mock\stm32f1xx_hal_flash_ex.o"
+"iic_mock\stm32f1xx_hal_exti.o"
+"iic_mock\system_stm32f1xx.o"
+--strict --scatter "iic_mock\iic_mock.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "iic_mock.map" -o iic_mock\iic_mock.axf
