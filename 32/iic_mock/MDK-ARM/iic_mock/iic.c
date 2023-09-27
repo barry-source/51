@@ -47,25 +47,17 @@ void iic_stop(void){
 	iic_delay_1us();
 }
 
-void iic_send_byte(uint8_t _ucByte){
+void iic_send_byte(uint8_t byte){
 	uint8_t i;
 	for (i = 0; i < 8; i++) {
 		IIC_SCL_0();
-		if (_ucByte & 0x80){
-			IIC_SDA_1();
-		} else{
-			IIC_SDA_0();
-		}
+		(byte & 0x80) ? (IIC_SDA_1()) : (IIC_SDA_0());
 		iic_delay_1us();
 		IIC_SCL_1();
 		iic_delay_1us();
 		IIC_SCL_0();
-		// 发送最后一位
-		if (i == 7) {
-			 IIC_SDA_1(); 	// 释放总线
-		}
-		_ucByte <<= 1;		// 左移一个bit 
 		iic_delay_1us();
+		byte <<= 1;		// 左移一个bit 
 	}
 }
 
