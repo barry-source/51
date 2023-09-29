@@ -111,6 +111,7 @@ int main(void)
 	
 	//ÕýÇ°·½
 	turn_90_degree();
+	stop();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -122,7 +123,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 		
 		switch(runMode) {
-			case tracingMode:
+			case tracingMode: 
 				traceing();
 				break;
 			case followMode:
@@ -134,95 +135,6 @@ int main(void)
 			case stopMode:
 				break;
 		}
-		/*
-		if(dir != MIDDLE) {
-			dir = MIDDLE;
-			turn_90_degree();
-			HAL_Delay(300);
-		}
-		disMiddle = get_distance();
-		
-		if(disMiddle > 35) {
-			forward();
-		} else if(disMiddle < 10) {
-			backward();
-		} else {
-			stop();
-			turn_180_degree();
-			HAL_Delay(300);
-			disLeft = get_distance();
-			
-			turn_90_degree();
-			HAL_Delay(300);
-			
-			turn_0_degree();
-			dir = RIGHT;
-			HAL_Delay(300);
-			disRight = get_distance();
-			
-			if(disLeft < disRight) {
-				rightward();
-				HAL_Delay(150);
-				stop();
-			} 
-			if(disLeft > disRight){
-				leftward();
-				HAL_Delay(150);
-				stop();
-			}
-		}
-*/
-		/*
-		HAL_Delay(2000);
-		printf("%f\r\n", get_distance());
-		
-		*/
-		/*
-		turn_0_degree();
-		HAL_Delay(1000);
-		turn_90_degree();
-		HAL_Delay(1000);
-		turn_180_degree();
-		HAL_Delay(1000);
-		turn_90_degree();
-		HAL_Delay(1000);
-		*/
-		/*
-		if(leftFollowValue() == GPIO_PIN_RESET && rightFollowValue() == GPIO_PIN_RESET) {
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,19);
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,16);
-		}
-		if(leftFollowValue() == GPIO_PIN_RESET && rightFollowValue() == GPIO_PIN_SET) {
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,19);
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,4);
-		}
-		if(leftFollowValue() == GPIO_PIN_SET && rightFollowValue() == GPIO_PIN_RESET) {
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,4);
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,19);
-		}
-		if(leftFollowValue() == GPIO_PIN_SET && rightFollowValue() == GPIO_PIN_SET) {
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,0);
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,0);
-		}
-		*/
-		/*
-		if(leftTraceValue() == GPIO_PIN_RESET && rightTraceValue() == GPIO_PIN_RESET) {
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,19);
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,16);
-		}
-		if(leftTraceValue() == GPIO_PIN_RESET && rightTraceValue() == GPIO_PIN_SET) {
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,4);
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,19);
-		}
-		if(leftTraceValue() == GPIO_PIN_SET && rightTraceValue() == GPIO_PIN_RESET) {
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,19);
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,4);
-		}
-		if(leftTraceValue() == GPIO_PIN_SET && rightTraceValue() == GPIO_PIN_SET) {
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,0);
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,0);
-		}
-		*/
   }
   /* USER CODE END 3 */
 }

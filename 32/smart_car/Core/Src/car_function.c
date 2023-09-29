@@ -22,7 +22,7 @@ void follow() {
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
-		HAL_Delay(500);
+		HAL_Delay(100);
 		// ¥¶¿Ìoled
 	}
 	if(leftFollowValue() == GPIO_PIN_RESET && rightFollowValue() == GPIO_PIN_RESET) {
