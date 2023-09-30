@@ -24,10 +24,12 @@ smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h
 smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+smart_car\main.o: ../Core/Inc/i2c.h
 smart_car\main.o: ../Core/Inc/tim.h
 smart_car\main.o: ../Core/Inc/usart.h
 smart_car\main.o: ../Core/Inc/gpio.h
@@ -38,3 +40,4 @@ smart_car\main.o: ../Core/Src/sensor.h
 smart_car\main.o: ../Core/Src/sg90.h
 smart_car\main.o: ../Core/Src/sr04.h
 smart_car\main.o: ../Core/Src/su03.h
+smart_car\main.o: ../Core/Src/oled.h

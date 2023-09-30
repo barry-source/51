@@ -10,6 +10,6 @@ enum Mode {
 
 extern enum Mode runMode;
 
-enum Mode getMode(void);
+enum Mode get_mode(void);
 
 #endif

@@ -13,5 +13,5 @@ GPIO_PinState leftFollowValue() {
 }
 
 GPIO_PinState rightFollowValue() {
-	return HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6);
+	return HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_15);
 }

@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -31,6 +32,7 @@
 #include "sg90.h"
 #include "sr04.h"
 #include "su03.h"
+#include "oled.h"
 
 /* USER CODE END Includes */
 
@@ -64,6 +66,7 @@ int fputc(int ch, FILE *file) {
 	HAL_UART_Transmit(&huart1, temp, 1, 0xfff);
 	return ch;
 }
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -104,6 +107,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM1_Init();
   MX_TIM3_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 	HAL_UART_Receive_IT(&huart1, &buf, 1);
 	sg90_init();
@@ -112,6 +116,9 @@ int main(void)
 	//ÕýÇ°·½
 	turn_90_degree();
 	stop();
+	oled_init();
+	oled_clear();
+	oled_show_string(2,2,"-----Ready----");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -122,7 +129,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		
-		switch(runMode) {
+		switch(get_mode()) {
 			case tracingMode: 
 				traceing();
 				break;
@@ -133,6 +140,7 @@ int main(void)
 				avoid();
 				break;
 			case stopMode:
+				stop_car();
 				break;
 		}
   }

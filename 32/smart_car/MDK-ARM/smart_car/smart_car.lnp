@@ -12,6 +12,8 @@
 "smart_car\sr04.o"
 "smart_car\su03.o"
 "smart_car\car_function.o"
+"smart_car\oled.o"
+"smart_car\i2c.o"
 "smart_car\stm32f1xx_hal_gpio_ex.o"
 "smart_car\stm32f1xx_hal_tim.o"
 "smart_car\stm32f1xx_hal_tim_ex.o"
@@ -26,6 +28,7 @@
 "smart_car\stm32f1xx_hal_flash.o"
 "smart_car\stm32f1xx_hal_flash_ex.o"
 "smart_car\stm32f1xx_hal_exti.o"
+"smart_car\stm32f1xx_hal_i2c.o"
 "smart_car\system_stm32f1xx_1.o"
 --library_type=microlib --strict --scatter "smart_car\smart_car.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

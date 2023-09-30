@@ -6,6 +6,7 @@
 #include "motor.h"
 #include "tim.h"
 #include "sensor.h"
+#include "oled.h"
 
 #define MIDDLE 0
 #define LEFT 1
@@ -24,7 +25,10 @@ void follow() {
 		changeMode(NORMAL);
 		HAL_Delay(100);
 		// 处理oled
+		oled_clear();
+		oled_show_string(2,2,"-----Follow----");
 	}
+	return ;
 	if(leftFollowValue() == GPIO_PIN_RESET && rightFollowValue() == GPIO_PIN_RESET) {
 		forward();
 	}
@@ -45,8 +49,10 @@ void avoid() {
 			changeMode(NORMAL);
 			HAL_Delay(500);
 			// 处理oled
+			oled_clear();
+			oled_show_string(2,2,"-----Avoid----");
 		}
-		
+		return ;
 		if(dir != MIDDLE) {
 			dir = MIDDLE;
 			turn_90_degree();
@@ -92,7 +98,10 @@ void traceing() {
 		changeMode(PWM);
 		HAL_Delay(500);
 		// 处理oled
+		oled_clear();
+		oled_show_string(2,2,"-----Tracing----");
 	}
+	return ;
 	if(leftTraceValue() == GPIO_PIN_RESET && rightTraceValue() == GPIO_PIN_RESET) {
 		forward();
 	}
@@ -104,6 +113,14 @@ void traceing() {
 	}
 	if(leftTraceValue() == GPIO_PIN_SET && rightTraceValue() == GPIO_PIN_SET) {
 		stop();
+	}
+}
+
+void stop_car() {
+	if(runMode != lastMode) {
+		lastMode = runMode;
+		oled_clear();
+		oled_show_string(2,2,"-----Stop----");
 	}
 }
 
