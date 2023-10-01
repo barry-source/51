@@ -14,6 +14,7 @@
 "smart_car\car_function.o"
 "smart_car\oled.o"
 "smart_car\i2c.o"
+"smart_car\dht11.o"
 "smart_car\stm32f1xx_hal_gpio_ex.o"
 "smart_car\stm32f1xx_hal_tim.o"
 "smart_car\stm32f1xx_hal_tim_ex.o"

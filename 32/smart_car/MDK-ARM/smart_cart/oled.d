@@ -1,5 +1,7 @@
 smart_cart\oled.o: ..\Core\Src\oled.c
 smart_cart\oled.o: ..\Core\Src\oled.h
+smart_cart\oled.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+smart_cart\oled.o: ..\Core\Src\oledFont.h
 smart_cart\oled.o: ../Core/Inc/i2c.h
 smart_cart\oled.o: ../Core/Inc/main.h
 smart_cart\oled.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
@@ -9,7 +11,6 @@ smart_cart\oled.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h
 smart_cart\oled.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 smart_cart\oled.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 smart_cart\oled.o: ../Drivers/CMSIS/Include/core_cm3.h
-smart_cart\oled.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 smart_cart\oled.o: ../Drivers/CMSIS/Include/cmsis_version.h
 smart_cart\oled.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 smart_cart\oled.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
@@ -31,4 +32,3 @@ smart_cart\oled.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 smart_cart\oled.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_cart\oled.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 smart_cart\oled.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-smart_cart\oled.o: ..\Core\Src\oledFont.h

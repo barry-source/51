@@ -117,19 +117,55 @@ void oled_init() {
 	iic_write_cmd(0xAF);//--turn on oled panel		
 }
 
-
-void oled_clear() {
+void oled_clear(uint8_t x0, uint8_t x1, uint8_t y0, uint8_t y1) {
+	assert_param(x0 <= 8);
+	assert_param(x1 <= 8);
+	assert_param(x1 >= x0);
+	
+	assert_param(y0 <= 128);
+	assert_param(y1 <= 128);
+	assert_param(y1 >= y0);
+	
 	int i, j;
+	//ѡ��ҳģʽ
 	iic_write_cmd(0x20);
 	iic_write_cmd(0x02);
-	for(i = 0; i < 8; i ++) {
+	for(i = x0; i < x1; i ++) {
 		iic_write_cmd(0xB0+i);
-		iic_write_cmd(0x00);
-		iic_write_cmd(0x10);
-		for(j = 0; j < 128; j ++) {
-			iic_write_data(0);
+		iic_write_cmd(0x00 + y0 % 16);
+		iic_write_cmd(0x10 + y0 / 16);
+		for(j = y0; j < y1; j ++) { 
+				iic_write_data(0);
 		}
 	}
+}
+
+void oled_clear_1_line() {
+	oled_clear(0, 2, 0, 128);
+}
+
+void oled_clear_2_line() {
+	oled_clear(2, 4, 0, 128);
+}
+
+void oled_clear_3_line() {
+	oled_clear(4, 6, 0, 128);
+}
+
+void oled_clear_4_line() {
+	oled_clear(6, 8, 0, 128);
+}
+
+void oled_clear_all() {
+	oled_clear(0, 8, 0, 128);
+}
+
+void old__clear_top_half() {
+	oled_clear(1, 4, 0, 128);
+}
+
+void old__clear_bottom_half() {
+	oled_clear(4, 8, 0, 128);
 }
 
 void oled_image(unsigned char *image)
@@ -181,4 +217,4 @@ void oled_show_string(char row,char col,char *str) {
 	}		
 }
 
-
+/////////////////////////////////////////////////////////////////////

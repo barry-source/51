@@ -1,5 +1,6 @@
 #include "su03.h"
 #include "gpio.h"
+#include "tim.h"
 
 #define SU_A25_Value() HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_11)
 #define SU_A26_Value() HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12)

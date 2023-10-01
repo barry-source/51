@@ -7,8 +7,12 @@ void avoid(void);
 
 void traceing(void);
 
-void stop_car();
+void stop_car(void);
 
+void display_temp_humi(void);
+ 
 void init(void);
+
+void reset(void);
 
 #endif

@@ -38,4 +38,6 @@ smart_cart\car_function.o: ../Core/Inc/main.h
 smart_cart\car_function.o: ..\Core\Src\sensor.h
 smart_cart\car_function.o: ../Core/Inc/gpio.h
 smart_cart\car_function.o: ..\Core\Src\oled.h
-smart_cart\car_function.o: ../Core/Inc/i2c.h
+smart_cart\car_function.o: ..\Core\Src\dht11.h
+smart_cart\car_function.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+smart_cart\car_function.o: ../Core/Inc/usart.h

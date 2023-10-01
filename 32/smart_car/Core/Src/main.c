@@ -55,7 +55,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+unsigned int speedCnt;
+char speedString[24];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,6 +68,23 @@ int fputc(int ch, FILE *file) {
 	return ch;
 }
 
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	// 展示速度
+	//oled部分清屏
+	sprintf(speedString, "speed:%4dcm/s", speedCnt);
+	//old__clear_bottom_half();
+	oled_show_string(2,2,speedString);
+	speedCnt = 0;
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	
+	if(GPIO_Pin != GPIO_PIN_10) {
+		return ;
+	}
+	if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10) == GPIO_PIN_RESET)
+		speedCnt++;
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -109,16 +127,7 @@ int main(void)
   MX_TIM3_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-	HAL_UART_Receive_IT(&huart1, &buf, 1);
-	sg90_init();
-	HAL_Delay(200);
-	
-	//正前方
-	turn_90_degree();
-	stop();
-	oled_init();
-	oled_clear();
-	oled_show_string(2,2,"-----Ready----");
+	init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -128,8 +137,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		
-		switch(get_mode()) {
+		get_mode();
+		reset();
+		switch(runMode) {
 			case tracingMode: 
 				traceing();
 				break;
@@ -143,7 +153,9 @@ int main(void)
 				stop_car();
 				break;
 		}
+		display_temp_humi();
   }
+	
   /* USER CODE END 3 */
 }
 

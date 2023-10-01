@@ -6,6 +6,8 @@
 "smart_cart\sg90.o"
 "smart_cart\sr04.o"
 "smart_cart\su03.o"
+"smart_cart\oled.o"
+"smart_cart\dht11.o"
 "smart_cart\main.o"
 "smart_cart\gpio.o"
 "smart_cart\i2c.o"
@@ -13,7 +15,6 @@
 "smart_cart\usart.o"
 "smart_cart\stm32f1xx_it.o"
 "smart_cart\stm32f1xx_hal_msp.o"
-"smart_cart\oled.o"
 "smart_cart\stm32f1xx_hal_gpio_ex.o"
 "smart_cart\stm32f1xx_hal_i2c.o"
 "smart_cart\stm32f1xx_hal.o"
@@ -30,7 +31,7 @@
 "smart_cart\stm32f1xx_hal_tim_ex.o"
 "smart_cart\stm32f1xx_hal_uart.o"
 "smart_cart\system_stm32f1xx.o"
---strict --scatter "smart_cart\smart_cart.sct"
+--library_type=microlib --strict --scatter "smart_cart\smart_cart.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "smart_cart.map" -o smart_cart\smart_cart.axf
