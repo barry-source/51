@@ -290,7 +290,8 @@ Oled_Init();
 	Oled_Write_Cmd(0x02);
 	Oled_Screen_Clear();
 	Oled_Show_Image(bmpImager);
-	scroll_horizonal_page0();
+	// 移动第一页和第二页
+	//scroll_horizonal_page0();
   /* USER CODE END 2 */
 
   /* Infinite loop */
