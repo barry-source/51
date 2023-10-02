@@ -128,6 +128,8 @@ void stop_car() {
 		lastMode = runMode;
 		oled_clear_1_line();
 		oled_show_string(1,2, "mode : stop");
+		// 主要是复原舵机正前方
+		reset();
 	}
 }
 
@@ -177,6 +179,8 @@ void init() {
 void reset() {
 	if(runMode == followMode || runMode == tracingMode) {
 		HAL_TIM_Base_Start_IT(&htim3);
+	} else {
+		HAL_TIM_Base_Stop_IT(&htim3);
 	}
 	if(runMode != tracingMode) {
 		//切换到其它模式，将舵机指向正前方

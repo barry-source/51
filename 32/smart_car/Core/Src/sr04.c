@@ -10,13 +10,18 @@ void time1_delay_us(uint16_t n) {
 	__HAL_TIM_DISABLE(&htim1);
 }
 
-double get_distance() {
 
-	int cnt = 0;
+void trig() {
 	//trig 要保持至少10us的高电平
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
 	time1_delay_us(20);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+}
+
+double get_distance() {
+
+	int cnt = 0;
+	trig();
 	
 	while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_RESET);
 	HAL_TIM_Base_Start(&htim1);
