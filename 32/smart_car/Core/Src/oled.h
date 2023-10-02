@@ -22,4 +22,6 @@ void oled_clear_4_line(void);
 
 void oled_show_string(char row,char col,char *str);
 
+void scroll_horizonal_page0(void);
+
 #endif

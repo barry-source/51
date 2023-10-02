@@ -193,7 +193,7 @@ void init() {
 	oled_show_string(1,2,"mode : stop");
 	oled_show_string(2,2, "speed: ----");
 	oled_show_string(3,2, "Temp :--.--");
-	oled_show_string(4,2, "Temp :--.--");
+	oled_show_string(4,2, "Humi :--.--");
 }
 
 void reset() {

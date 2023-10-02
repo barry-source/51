@@ -202,13 +202,6 @@ void Oled_Show_Char(char row,char col,char oledChar) { //row*2-2
 	}		
 }
 
-
-/******************************************************************************/
-// 函数名称：Oled_Show_Char 
-// 输入参数：oledChar 
-// 输出参数：无 
-// 函数功能：OLED显示单个字符
-/******************************************************************************/
 void oled_show_string(char row,char col,char *str) {
 	while(*str!=0){
 		Oled_Show_Char(row,col,*str);
@@ -217,4 +210,23 @@ void oled_show_string(char row,char col,char *str) {
 	}		
 }
 
-/////////////////////////////////////////////////////////////////////
+void scroll_horizonal_page0() {
+	// Deactive scroll
+	iic_write_cmd(0x2E); 
+	// 水平向右滚动
+	iic_write_cmd(0x27); 
+	// 必须
+	iic_write_cmd(0x00); 
+	// page0开始
+	iic_write_cmd(0x00); 
+	// 128 帧
+	iic_write_cmd(0x06); 
+	// page1 结束 
+	iic_write_cmd(0x01); 
+	// 必须
+	iic_write_cmd(0x00);
+	// 必须
+	iic_write_cmd(0xFF);
+	// Active scroll	
+	iic_write_cmd(0x2F); 
+}
