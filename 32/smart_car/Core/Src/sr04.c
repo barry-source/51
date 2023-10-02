@@ -2,6 +2,7 @@
 #include "gpio.h"
 #include "tim.h"
 
+double distance = 0;
 
 void time1_delay_us(uint16_t n) {
 	__HAL_TIM_ENABLE(&htim1);
@@ -21,6 +22,7 @@ void trig() {
 double get_distance() {
 
 	int cnt = 0;
+
 	trig();
 	
 	while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_RESET);

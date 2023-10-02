@@ -15,6 +15,11 @@
 #define LEFT 1
 #define RIGHT 2
 
+// 小车头部3.5cm
+#define FRONT_DIS 3.5
+// 小车头部7cm
+#define LEFT_DIS 7
+
 double disLeft = 0;
 double disMiddle = 0;
 double disRight = 0;
@@ -51,51 +56,67 @@ void follow() {
 }
 
 void avoid() {
-		if(runMode != lastMode) {
-			lastMode = runMode;
-			changeMode(NORMAL);
-			// 处理oled
-			oled_clear_1_line();
-			oled_show_string(1,2,"mode : avoid");
-			HAL_Delay(500);
-		}
+	uint16_t i = 0;
+	if(runMode != lastMode) {
+		lastMode = runMode;
+		changeMode(NORMAL);
+		// 处理oled
+		oled_clear_1_line();
+		oled_show_string(1,2,"mode : avoid");
+		HAL_Delay(500);
+	}
 
-		if(dir != MIDDLE) {
-			dir = MIDDLE;
-			turn_90_degree();
-			HAL_Delay(300);
-		}
-		disMiddle = get_distance();
+	if(dir != MIDDLE) {
+		dir = MIDDLE;
+		turn_90_degree();
+		HAL_Delay(300);
+	}
+	distance = 0;
+	trig();
+	while(!distance);
+	disMiddle = distance - FRONT_DIS;
+	printf("front:%f\r\n", distance);
+	if(disMiddle > 35) {
+		forward();
+	} else if(disMiddle < 10) {
+		backward();
+	} else {
+		stop();
+		turn_180_degree();
+		HAL_Delay(300);
+		distance = 0;
+		trig();
+		while(!distance);
+		disLeft = distance - FRONT_DIS;
+		printf("left:%f\r\n", distance);
 		
-		if(disMiddle > 35) {
-			forward();
-		} else if(disMiddle < 10) {
+		turn_90_degree();
+		HAL_Delay(300);
+		distance = 0;
+		trig();
+		while(!distance);
+		disMiddle = distance - LEFT_DIS;
+		if(disMiddle < 10) 
 			backward();
-		} else {
+		turn_0_degree();
+		dir = RIGHT;
+		HAL_Delay(300);
+		distance = 0;
+		trig();
+		while(!distance);
+		disRight = distance - LEFT_DIS;
+		printf("right:%f\r\n", distance);
+		if(disLeft < disRight) {
+			rightward();
+			HAL_Delay(150);
 			stop();
-			turn_180_degree();
-			HAL_Delay(300);
-			disLeft = get_distance();
-			
-			turn_90_degree();
-			HAL_Delay(300);
-			
-			turn_0_degree();
-			dir = RIGHT;
-			HAL_Delay(300);
-			disRight = get_distance();
-			
-			if(disLeft < disRight) {
-				rightward();
-				HAL_Delay(150);
-				stop();
-			} 
-			if(disLeft > disRight){
-				leftward();
-				HAL_Delay(150);
-				stop();
-			}
+		} 
+		if(disLeft > disRight){
+			leftward();
+			HAL_Delay(150);
+			stop();
 		}
+	}
 
 }
 
@@ -152,7 +173,6 @@ void display_temp_humi() {
 	uint8_t result = trig_dht();
 	//printf("result: %d\r\n", result);
 	receive_data();
-	printf("test1");
 	
 	oled_clear(4, 8, 56, 128);
 	sprintf(msg, "Temp : %d.%d C", datas[2], datas[3]);
@@ -170,14 +190,14 @@ void init() {
 	//初始化oled
 	oled_init();
 	oled_clear_all();
-	oled_show_string(1,2,"mode : ready");
-	oled_show_string(2,2, "speed:   0cm/s");
+	oled_show_string(1,2,"mode : stop");
+	oled_show_string(2,2, "speed: ----");
 	oled_show_string(3,2, "Temp :--.--");
 	oled_show_string(4,2, "Temp :--.--");
 }
 
 void reset() {
-	if(runMode == followMode || runMode == tracingMode) {
+	if(runMode == followMode || runMode == tracingMode || runMode == avoidMode) {
 		HAL_TIM_Base_Start_IT(&htim3);
 	} else {
 		HAL_TIM_Base_Stop_IT(&htim3);

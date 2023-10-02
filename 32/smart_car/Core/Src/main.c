@@ -78,12 +78,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	
-	if(GPIO_Pin != GPIO_PIN_10) {
-		return ;
+	//Âö³å²âËÙ
+	if(GPIO_Pin == GPIO_PIN_10) {
+		if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10) == GPIO_PIN_RESET)
+			speedCnt++;
 	}
-	if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10) == GPIO_PIN_RESET)
-		speedCnt++;
+	//³¬Éù²¨echo
+	if(GPIO_Pin == GPIO_PIN_12) {
+		//while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_RESET);
+		HAL_TIM_Base_Start(&htim1);
+		__HAL_TIM_SetCounter(&htim1, 0);
+		
+		while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_SET);
+		HAL_TIM_Base_Stop(&htim1);
+		
+		int cnt = __HAL_TIM_GetCounter(&htim1);
+		distance = 340 * 0.000001 * cnt * 100 / 2;
+	}
+	
 }
 /* USER CODE END PFP */
 
