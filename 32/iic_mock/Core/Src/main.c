@@ -75,6 +75,27 @@ void iic_write_data(char d) {
 	iic_stop();
 }
 
+void scroll_horizonal_page0() {
+	// Deactive scroll
+	iic_write_cmd(0x2E); 
+	// 水平向右滚动
+	iic_write_cmd(0x27); 
+	// 必须
+	iic_write_cmd(0x00); 
+	// page0开始
+	iic_write_cmd(0x00); 
+	// 128 帧
+	iic_write_cmd(0x07); 
+	// page1 结束 
+	iic_write_cmd(0x01); 
+	// 必须
+	iic_write_cmd(0x00);
+	// 必须
+	iic_write_cmd(0xFF);
+	// Active scroll	
+	iic_write_cmd(0x2F); 
+}
+
 void Oled_Write_Cmd(uint8_t dataCmd)
 {
 	iic_write_cmd(dataCmd);
@@ -269,6 +290,7 @@ Oled_Init();
 	Oled_Write_Cmd(0x02);
 	Oled_Screen_Clear();
 	Oled_Show_Image(bmpImager);
+	scroll_horizonal_page0();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -278,6 +300,7 @@ Oled_Init();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		
   }
   /* USER CODE END 3 */
 }

@@ -10,8 +10,8 @@
 #define CPU_FREQUENCY_MHZ  72		 			 // STM32时钟主频
 
 #define IIC_GPIO_PORT	GPIOB			    	 // GPIO端口 
-#define IIC_SCL_PIN		GPIO_PIN_9			 // 连接到SCL时钟线的GPIO引脚
-#define IIC_SDA_PIN		GPIO_PIN_8			 // 连接到SDA数据线的GPIO引脚
+#define IIC_SCL_PIN		GPIO_PIN_6			 // 连接到SCL时钟线的GPIO引脚
+#define IIC_SDA_PIN		GPIO_PIN_7			 // 连接到SDA数据线的GPIO引脚
  
 #define IIC_SCL_1()  IIC_GPIO_PORT->BSRR = IIC_SCL_PIN											// SCL = 1 
 #define IIC_SCL_0()  IIC_GPIO_PORT->BSRR = (uint32_t)IIC_SCL_PIN << 16U  		// SCL = 0 
@@ -34,6 +34,5 @@ void iic_ack(void); //应答信号
 uint8_t iic_read_byte(void); //读取一个字节
 
 uint8_t iic_wait_ack(void); //等待应答信号
-
 
 #endif
