@@ -220,7 +220,7 @@ void scroll_horizonal_page0() {
 	// page0开始
 	iic_write_cmd(0x00); 
 	// 128 帧
-	iic_write_cmd(0x06); 
+	iic_write_cmd(0x01); 
 	// page1 结束 
 	iic_write_cmd(0x01); 
 	// 必须
