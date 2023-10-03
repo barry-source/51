@@ -1,0 +1,28 @@
+--cpu Cortex-M3
+"paj7620_iic_it\startup_stm32f103xb.o"
+"paj7620_iic_it\iic.o"
+"paj7620_iic_it\iic_paj7620.o"
+"paj7620_iic_it\main.o"
+"paj7620_iic_it\gpio.o"
+"paj7620_iic_it\usart.o"
+"paj7620_iic_it\stm32f1xx_it.o"
+"paj7620_iic_it\stm32f1xx_hal_msp.o"
+"paj7620_iic_it\stm32f1xx_hal_gpio_ex.o"
+"paj7620_iic_it\stm32f1xx_hal_tim.o"
+"paj7620_iic_it\stm32f1xx_hal_tim_ex.o"
+"paj7620_iic_it\stm32f1xx_hal_uart.o"
+"paj7620_iic_it\stm32f1xx_hal.o"
+"paj7620_iic_it\stm32f1xx_hal_rcc.o"
+"paj7620_iic_it\stm32f1xx_hal_rcc_ex.o"
+"paj7620_iic_it\stm32f1xx_hal_gpio.o"
+"paj7620_iic_it\stm32f1xx_hal_dma.o"
+"paj7620_iic_it\stm32f1xx_hal_cortex.o"
+"paj7620_iic_it\stm32f1xx_hal_pwr.o"
+"paj7620_iic_it\stm32f1xx_hal_flash.o"
+"paj7620_iic_it\stm32f1xx_hal_flash_ex.o"
+"paj7620_iic_it\stm32f1xx_hal_exti.o"
+"paj7620_iic_it\system_stm32f1xx.o"
+--library_type=microlib --strict --scatter "paj7620_iic_IT\paj7620_iic_IT.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "paj7620_iic_IT.map" -o paj7620_iic_IT\paj7620_iic_IT.axf

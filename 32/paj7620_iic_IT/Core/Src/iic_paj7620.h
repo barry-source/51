@@ -1,0 +1,96 @@
+#include "stdint.h"
+
+#ifndef __IICPAJ7620_H__
+#define	__IICPAJ7620_H__
+
+// PAJ7620 ---- INI 中断引脚（0有效）
+#define PAJ7620_IT_PORT					  GPIOB
+#define PAJ7620_IT_PIN						GPIO_PIN_5
+
+
+// DEVICE ADDRESS
+#define PAJ7620_ADDRESS  					0x73
+
+// DEVICE ID
+#define PAJ7620_ID							0x73
+#define PAJ7620_PART_ID_0					0x20
+#define PAJ7620_PART_ID_1					0x76
+
+// REGISTER DESCRIPTION
+#define PAJ7620_VAL(val, maskbit)			( val << maskbit )
+#define PAJ7620_ADDR_BASE					0x00
+
+// REGISTER BANK SELECT
+#define PAJ7620_REGITER_BANK_SEL			(PAJ7620_ADDR_BASE + 0xEF)	//W
+
+// REGISTER BANK 0
+#define PAJ7620_ADDR_PART_ID_0			(PAJ7620_ADDR_BASE + 0x0)	//R
+#define PAJ7620_ADDR_PART_ID_1			(PAJ7620_ADDR_BASE + 0x1)	//R
+#define PAJ7620_ADDR_SUSPEND_CMD			(PAJ7620_ADDR_BASE + 0x3)	//W
+#define PAJ7620_ADDR_GES_PS_DET_MASK_0	(PAJ7620_ADDR_BASE + 0x41)	//RW
+#define PAJ7620_ADDR_GES_PS_DET_MASK_1	(PAJ7620_ADDR_BASE + 0x42)	//RW
+#define PAJ7620_ADDR_GES_PS_DET_FLAG_0	(PAJ7620_ADDR_BASE + 0x43)	//R
+#define PAJ7620_ADDR_GES_PS_DET_FLAG_1	(PAJ7620_ADDR_BASE + 0x44)	//R
+#define PAJ7620_ADDR_STATE_INDICATOR		(PAJ7620_ADDR_BASE + 0x45)	//R
+#define PAJ7620_ADDR_PS_HIGH_THRESHOLD	(PAJ7620_ADDR_BASE + 0x69)	//RW
+#define PAJ7620_ADDR_PS_LOW_THRESHOLD	(PAJ7620_ADDR_BASE + 0x6A)	//RW
+#define PAJ7620_ADDR_PS_APPROACH_STATE	(PAJ7620_ADDR_BASE + 0x6B)	//R
+#define PAJ7620_ADDR_PS_RAW_DATA			(PAJ7620_ADDR_BASE + 0x6C)	//R
+
+// REGISTER BANK 1
+#define PAJ7620_ADDR_PS_GAIN				(PAJ7620_ADDR_BASE + 0x44)	//RW
+#define PAJ7620_ADDR_IDLE_S1_STEP_0		(PAJ7620_ADDR_BASE + 0x67)	//RW
+#define PAJ7620_ADDR_IDLE_S1_STEP_1		(PAJ7620_ADDR_BASE + 0x68)	//RW
+#define PAJ7620_ADDR_IDLE_S2_STEP_0		(PAJ7620_ADDR_BASE + 0x69)	//RW
+#define PAJ7620_ADDR_IDLE_S2_STEP_1		(PAJ7620_ADDR_BASE + 0x6A)	//RW
+#define PAJ7620_ADDR_OP_TO_S1_STEP_0		(PAJ7620_ADDR_BASE + 0x6B)	//RW
+#define PAJ7620_ADDR_OP_TO_S1_STEP_1		(PAJ7620_ADDR_BASE + 0x6C)	//RW
+#define PAJ7620_ADDR_OP_TO_S2_STEP_0		(PAJ7620_ADDR_BASE + 0x6D)	//RW
+#define PAJ7620_ADDR_OP_TO_S2_STEP_1		(PAJ7620_ADDR_BASE + 0x6E)	//RW
+#define PAJ7620_ADDR_OPERATION_ENABLE	(PAJ7620_ADDR_BASE + 0x72)	//RW
+
+// PAJ7620_REGITER_BANK_SEL
+#define PAJ7620_BANK0			PAJ7620_VAL(0,0)
+#define PAJ7620_BANK1			PAJ7620_VAL(1,0)
+
+// PAJ7620_ADDR_SUSPEND_CMD
+#define PAJ7620_I2C_WAKEUP		PAJ7620_VAL(1,0)
+#define PAJ7620_I2C_SUSPEND	PAJ7620_VAL(0,0)
+
+// PAJ7620_ADDR_OPERATION_ENABLE
+#define PAJ7620_ENABLE			PAJ7620_VAL(1,0)
+#define PAJ7620_DISABLE			PAJ7620_VAL(0,0)
+
+#define GES_RIGHT_FLAG				PAJ7620_VAL(1,0)
+#define GES_LEFT_FLAG				PAJ7620_VAL(1,1)
+#define GES_UP_FLAG					PAJ7620_VAL(1,2)
+#define GES_DOWN_FLAG				PAJ7620_VAL(1,3)
+#define GES_FORWARD_FLAG			PAJ7620_VAL(1,4)
+#define GES_BACKWARD_FLAG			PAJ7620_VAL(1,5)
+#define GES_CLOCKWISE_FLAG		PAJ7620_VAL(1,6)
+#define GES_ANTICLOCKWISE_FLAG	PAJ7620_VAL(1,7)
+#define GES_WAVE_FLAG				PAJ7620_VAL(1,0)
+
+// 包含所有初始化
+void paj7620_init(void);
+void paj_iic_init(void);
+void paj_it_init(void);
+uint8_t paj_init(void);
+
+uint8_t paj7620_getInterrupt(void);
+uint8_t paj7620_sekect_bank(uint8_t bank);
+uint16_t paj7620_get_gesture(void);
+void paj7620_action(void);
+void paj7620_up(void);
+void paj7620_down(void);
+void paj7620_left(void);
+void paj7620_right(void);
+void paj7620_push(void);
+void paj7620_pop(void);
+void paj7620_rotate_right(void);
+void paj7620_rotate_left(void);
+void paj7620_wave(void);
+void paj7620_nothing(void);
+void paj7620_error(void);
+
+#endif

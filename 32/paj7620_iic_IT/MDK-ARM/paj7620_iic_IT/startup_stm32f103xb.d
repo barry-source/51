@@ -1,0 +1,1 @@
+paj7620_iic_it\startup_stm32f103xb.o: startup_stm32f103xb.s
