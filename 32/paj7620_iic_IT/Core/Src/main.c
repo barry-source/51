@@ -62,6 +62,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+
 	paj7620_action();
 }
 /* USER CODE END 0 */
@@ -96,7 +97,7 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 	paj7620_init();
-	HAL_Delay(20);
+	HAL_Delay(20000);
 	printf("OK\r\n");
   /* USER CODE END 2 */
 
