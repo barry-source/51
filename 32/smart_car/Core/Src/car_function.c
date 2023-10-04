@@ -10,6 +10,7 @@
 #include "dht11.h"
 #include "stdio.h"
 #include "usart.h"
+#include "iic_paj7620.h"
 
 #define MIDDLE 0
 #define LEFT 1
@@ -56,7 +57,6 @@ void follow() {
 }
 
 void avoid() {
-	uint16_t i = 0;
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
@@ -154,6 +154,29 @@ void stop_car() {
 	}
 }
 
+void gesture() {
+	if(runMode != lastMode) {
+		lastMode = runMode;
+		changeMode(NORMAL);
+		// 处理oled
+		oled_clear_1_line();
+		oled_show_string(1,2,"mode : gesture");
+		HAL_Delay(500);
+	}
+	paj7620_action();
+}
+
+void test() { 
+	if(runMode != lastMode) {
+		lastMode = runMode;
+		changeMode(NORMAL);
+		// 处理oled
+		oled_clear_1_line();
+		oled_show_string(1,2,"mode : test");
+		HAL_Delay(500);
+	}
+}
+	
 void display_temp_humi() {
 	
 	if(runMode != stopMode) {
@@ -187,6 +210,7 @@ void init() {
 	HAL_UART_Receive_IT(&huart1, &buf, 1);
 	//开启pwm，并旋转至最前方
 	sg90_init();
+	paj7620_init();
 	//初始化oled
 	oled_init();
 	oled_clear_all();
@@ -194,10 +218,11 @@ void init() {
 	oled_show_string(2,2, "speed: ----");
 	oled_show_string(3,2, "Temp :--.--");
 	oled_show_string(4,2, "Humi :--.--");
+	
 }
 
 void reset() {
-	if(runMode == followMode || runMode == tracingMode || runMode == avoidMode) {
+	if(runMode == followMode || runMode == tracingMode || runMode == avoidMode || runMode == gestureMode) {
 		HAL_TIM_Base_Start_IT(&htim3);
 	} else {
 		HAL_TIM_Base_Stop_IT(&htim3);

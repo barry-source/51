@@ -22,6 +22,14 @@ enum Mode get_mode() {
 		runMode = avoidMode;
 	}
 	
+	if(SU_A25_Value() == GPIO_PIN_RESET && SU_A26_Value() == GPIO_PIN_RESET && SU_A27_Value() == GPIO_PIN_SET) {
+		runMode = gestureMode;
+	}
+	
+	if(SU_A25_Value() == GPIO_PIN_RESET && SU_A26_Value() == GPIO_PIN_SET && SU_A27_Value() == GPIO_PIN_RESET) {
+		runMode = testMode;
+	}
+	
 	if(SU_A25_Value() == GPIO_PIN_RESET && SU_A26_Value() == GPIO_PIN_RESET && SU_A27_Value() == GPIO_PIN_RESET) {
 		runMode = stopMode;
 	}

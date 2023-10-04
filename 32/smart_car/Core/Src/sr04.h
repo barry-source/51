@@ -3,7 +3,7 @@
 
 extern double distance;
 
-void trig();
+void trig(void);
 
 double get_distance(void);
 

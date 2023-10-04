@@ -33,6 +33,7 @@
 #include "sr04.h"
 #include "su03.h"
 #include "oled.h"
+#include "iic_paj7620.h"
 
 /* USER CODE END Includes */
 
@@ -95,6 +96,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		int cnt = __HAL_TIM_GetCounter(&htim1);
 		distance = 340 * 0.000001 * cnt * 100 / 2;
 	}
+	// ÷ ∆÷–∂œ
+	if(GPIO_Pin == GPIO_PIN_7) {
+		uint16_t gCode = 0;
+		gCode = paj7620_get_gesture();
+		status = gCode;
+		printf("%d====°∑", gCode);
+	}
 	
 }
 /* USER CODE END PFP */
@@ -140,6 +148,7 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 	init();
+	changeMode(NORMAL);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -160,6 +169,12 @@ int main(void)
 				break;
 			case avoidMode:
 				avoid();
+				break;
+			case gestureMode:
+				gesture();
+				break;
+			case testMode:
+				test();
 				break;
 			case stopMode:
 				stop_car();

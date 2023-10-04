@@ -41,3 +41,4 @@ smart_cart\main.o: ../Core/Src/sg90.h
 smart_cart\main.o: ../Core/Src/sr04.h
 smart_cart\main.o: ../Core/Src/su03.h
 smart_cart\main.o: ../Core/Src/oled.h
+smart_cart\main.o: ../Core/Src/iic_paj7620.h

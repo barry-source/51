@@ -8,6 +8,8 @@
 "smart_cart\su03.o"
 "smart_cart\oled.o"
 "smart_cart\dht11.o"
+"smart_cart\iic.o"
+"smart_cart\iic_paj7620.o"
 "smart_cart\main.o"
 "smart_cart\gpio.o"
 "smart_cart\i2c.o"

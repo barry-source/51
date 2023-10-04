@@ -6,6 +6,8 @@ enum Mode {
 	tracingMode,
 	avoidMode,
 	followMode,
+	gestureMode,
+	testMode,
 };
 
 extern enum Mode runMode;
