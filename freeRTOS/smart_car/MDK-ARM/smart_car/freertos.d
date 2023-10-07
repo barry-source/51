@@ -43,3 +43,4 @@ smart_car\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 smart_car\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 smart_car\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 smart_car\freertos.o: ../Core/Inc/su03.h
+smart_car\freertos.o: ../Core/Inc/car_function.h

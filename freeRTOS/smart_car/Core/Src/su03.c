@@ -29,9 +29,9 @@ enum Mode get_mode() {
 		runMode = testMode;
 	}
 	
+	// 这里可以定义都低为模块不存在，有空再改吧
 	if(SU_A25_Value() == GPIO_PIN_RESET && SU_A26_Value() == GPIO_PIN_RESET && SU_A27_Value() == GPIO_PIN_RESET) {
 		runMode = stopMode;
-		printf("ssssss\r\n");
 	}
 	
 	return runMode;

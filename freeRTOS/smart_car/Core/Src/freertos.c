@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "su03.h"
+#include "car_function.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -132,8 +133,7 @@ void TaskMicrophone(void const * argument)
 				//traceing();
 				break;
 			case followMode:
-				//follow();
-			printf("2");
+				follow();
 				break;
 			case avoidMode:
 				//avoid();

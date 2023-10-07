@@ -42,6 +42,7 @@ smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+smart_car\main.o: ../Core/Inc/tim.h
 smart_car\main.o: ../Core/Inc/usart.h
 smart_car\main.o: ../Core/Inc/gpio.h
 smart_car\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
