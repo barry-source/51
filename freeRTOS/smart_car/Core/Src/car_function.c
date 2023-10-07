@@ -5,13 +5,14 @@
 #include "su03.h"
 #include "sensor.h"
 #include "motor.h"
+#include "oled.h"
 
 /*
 #include "sg90.h"
 #include "sr04.h"
 
 #include "tim.h"
-#include "oled.h"
+
 #include "dht11.h"
 
 #include "iic_paj7620.h"
@@ -40,11 +41,9 @@ void follow() {
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
-		/*
 		// 处理oled
 		oled_clear_1_line();
 		oled_show_string(1,2,"mode : follow");
-		*/
 		HAL_Delay(100);
 	}
 
@@ -132,11 +131,9 @@ void traceing() {
 		lastMode = runMode;
 		changeMode(PWM);
 		HAL_Delay(500);
-		/*
 		// 处理oled
 		oled_clear_1_line();
 		oled_show_string(1,2,"mode : trace");
-		*/
 	}
 
 	if(leftTraceValue() == GPIO_PIN_RESET && rightTraceValue() == GPIO_PIN_RESET) {
@@ -222,7 +219,7 @@ void init() {
 	/*
 	//开启pwm，并旋转至最前方
 	sg90_init();
-	paj7620_init();
+	paj7620_init();*/
 	//初始化oled
 	oled_init();
 	oled_clear_all();
@@ -230,7 +227,7 @@ void init() {
 	oled_show_string(2,2, "speed: ----");
 	oled_show_string(3,2, "Temp :--.--");
 	oled_show_string(4,2, "Humi :--.--");
-	*/
+	
 	
 }
 

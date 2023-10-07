@@ -24,6 +24,7 @@ smart_car\car_function.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_
 smart_car\car_function.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 smart_car\car_function.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 smart_car\car_function.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+smart_car\car_function.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 smart_car\car_function.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 smart_car\car_function.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 smart_car\car_function.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
@@ -35,3 +36,4 @@ smart_car\car_function.o: ../Core/Inc/su03.h
 smart_car\car_function.o: ../Core/Inc/sensor.h
 smart_car\car_function.o: ../Core/Inc/gpio.h
 smart_car\car_function.o: ../Core/Inc/motor.h
+smart_car\car_function.o: ../Core/Inc/oled.h
