@@ -419,6 +419,16 @@
               <FilePath>..\Core\Src\oled.c</FilePath>
             </File>
             <File>
+              <FileName>sg90.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\sg90.c</FilePath>
+            </File>
+            <File>
+              <FileName>sr04.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\sr04.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>

@@ -5,6 +5,8 @@
 "smart_car\sensor.o"
 "smart_car\motor.o"
 "smart_car\oled.o"
+"smart_car\sg90.o"
+"smart_car\sr04.o"
 "smart_car\main.o"
 "smart_car\gpio.o"
 "smart_car\freertos.o"

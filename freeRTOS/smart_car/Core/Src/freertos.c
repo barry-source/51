@@ -135,8 +135,7 @@ void TaskMicrophone(void const * argument)
 				follow();
 				break;
 			case avoidMode:
-				//avoid();
-			printf("3");
+				avoid();
 				break;
 			case gestureMode:
 				//gesture();

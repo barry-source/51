@@ -6,13 +6,11 @@
 #include "sensor.h"
 #include "motor.h"
 #include "oled.h"
-
-/*
 #include "sg90.h"
 #include "sr04.h"
-
 #include "tim.h"
 
+/*
 #include "dht11.h"
 
 #include "iic_paj7620.h"
@@ -62,7 +60,6 @@ void follow() {
 }
 
 void avoid() {
-	/*
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
@@ -123,7 +120,6 @@ void avoid() {
 			stop();
 		}
 	}
-*/
 }
 
 void traceing() {
@@ -186,7 +182,6 @@ void test() {
 }
 	
 void display_temp_humi() {
-	
 	/*
 	if(runMode != stopMode) {
 		return;
@@ -212,10 +207,10 @@ void display_temp_humi() {
 void init() {
 	//开启串口中断蓝牙在用
 	HAL_UART_Receive_IT(&huart1, &buf, 1);
-	/*
+	
 	//开启pwm，并旋转至最前方
 	sg90_init();
-	paj7620_init();*/
+	//paj7620_init();
 	//初始化oled
 	oled_init();
 	oled_clear_all();
@@ -228,16 +223,46 @@ void init() {
 }
 
 void reset() {
-	/*
 	if(runMode == followMode || runMode == tracingMode || runMode == avoidMode || runMode == gestureMode) {
-		HAL_TIM_Base_Start_IT(&htim3);
+		//HAL_TIM_Base_Start_IT(&htim3);
 	} else {
-		HAL_TIM_Base_Stop_IT(&htim3);
+		//HAL_TIM_Base_Stop_IT(&htim3);
 	}
 	if(runMode != tracingMode) {
 		//切换到其它模式，将舵机指向正前方
 		turn_90_degree();
 	}
-	*/
 }
 
+//////////////////////////中断/////////////////////////////
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	/*
+	//脉冲测速
+	if(GPIO_Pin == GPIO_PIN_10) {
+		if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10) == GPIO_PIN_RESET)
+			speedCnt++;
+	}
+	*/
+	//超声波echo
+	if(GPIO_Pin == GPIO_PIN_12) {
+		//while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_RESET);
+		HAL_TIM_Base_Start(&htim1);
+		__HAL_TIM_SetCounter(&htim1, 0);
+		
+		while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_SET);
+		HAL_TIM_Base_Stop(&htim1);
+		
+		int cnt = __HAL_TIM_GetCounter(&htim1);
+		distance = 340 * 0.000001 * cnt * 100 / 2;
+	}
+	/*
+	//手势中断
+	if(GPIO_Pin == GPIO_PIN_7) {
+		uint16_t gCode = 0;
+		gCode = paj7620_get_gesture();
+		status = gCode;
+		printf("%d====》", gCode);
+	}
+	*/
+}

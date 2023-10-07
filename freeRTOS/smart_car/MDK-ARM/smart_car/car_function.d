@@ -37,3 +37,6 @@ smart_car\car_function.o: ../Core/Inc/sensor.h
 smart_car\car_function.o: ../Core/Inc/gpio.h
 smart_car\car_function.o: ../Core/Inc/motor.h
 smart_car\car_function.o: ../Core/Inc/oled.h
+smart_car\car_function.o: ../Core/Inc/sg90.h
+smart_car\car_function.o: ../Core/Inc/sr04.h
+smart_car\car_function.o: ../Core/Inc/tim.h
