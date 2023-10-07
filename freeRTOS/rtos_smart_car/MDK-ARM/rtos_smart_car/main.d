@@ -24,6 +24,7 @@ rtos_smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.
 rtos_smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h
 rtos_smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h
 rtos_smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h
+rtos_smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h
 rtos_smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 rtos_smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 rtos_smart_car\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
@@ -42,9 +43,13 @@ rtos_smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers
 rtos_smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 rtos_smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 rtos_smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+rtos_smart_car\main.o: ../Core/Inc/i2c.h
 rtos_smart_car\main.o: ../Core/Inc/tim.h
 rtos_smart_car\main.o: ../Core/Inc/usart.h
 rtos_smart_car\main.o: ../Core/Inc/gpio.h
 rtos_smart_car\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 rtos_smart_car\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 rtos_smart_car\main.o: ../Core/Src/motor.h
+rtos_smart_car\main.o: ../Core/Src/car_function.h
+rtos_smart_car\main.o: ../Core/Src/sr04.h
+rtos_smart_car\main.o: ../Core/Src/iic_paj7620.h

@@ -1,16 +1,16 @@
 #include "car_function.h"
 #include "stm32f1xx_hal.h"
 #include "su03.h"
-//#include "sg90.h"
-//#include "sr04.h"
+#include "sg90.h"
+#include "sr04.h"
 #include "motor.h"
 #include "tim.h"
-//#include "sensor.h"
-//#include "oled.h"
-//#include "dht11.h"
+#include "sensor.h"
+#include "oled.h"
+#include "dht11.h"
 #include "stdio.h"
 #include "usart.h"
-//#include "iic_paj7620.h"
+#include "iic_paj7620.h"
 
 #define MIDDLE 0
 #define LEFT 1
@@ -32,7 +32,7 @@ enum Mode lastMode = stopMode;
 uint32_t count = 0;
 
 void follow() {
-	/*
+	
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
@@ -55,11 +55,11 @@ void follow() {
 	if(leftFollowValue() == GPIO_PIN_SET && rightFollowValue() == GPIO_PIN_SET) {
 		stop();
 	}
-	*/
+
 }
 
 void avoid() {
-	/*
+	
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
@@ -68,7 +68,15 @@ void avoid() {
 		oled_show_string(1,2,"mode : avoid");
 		HAL_Delay(500);
 	}
-
+	turn_0_degree();
+	HAL_Delay(100);
+	turn_90_degree();
+	HAL_Delay(100);
+	turn_180_degree();
+	HAL_Delay(100);
+	
+	/*
+	
 	if(dir != MIDDLE) {
 		dir = MIDDLE;
 		turn_90_degree();
@@ -120,11 +128,11 @@ void avoid() {
 			stop();
 		}
 	}
-*/
+	*/
 }
 
 void traceing() {
-	/*
+	
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(PWM);
@@ -146,11 +154,9 @@ void traceing() {
 	if(leftTraceValue() == GPIO_PIN_SET && rightTraceValue() == GPIO_PIN_SET) {
 		stop();
 	}
-	*/
 }
 
 void stop_car() {
-	/*
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		oled_clear_1_line();
@@ -158,25 +164,23 @@ void stop_car() {
 		// 主要是复原舵机正前方
 		reset();
 	}
-	*/
 }
 
 void gesture() {
-	/*
+	
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
 		// 处理oled
 		oled_clear_1_line();
 		oled_show_string(1,2,"mode : gesture");
-		HAL_Delay(500);
+		HAL_Delay(100);
 	}
 	paj7620_action();
-	*/
 }
 
 void test() { 
-	/*
+	
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
@@ -185,12 +189,11 @@ void test() {
 		oled_show_string(1,2,"mode : test");
 		HAL_Delay(500);
 	}
-	*/
 }
 	
-/*
+
 void display_temp_humi() {
-	
+	/*
 	if(runMode != stopMode) {
 		return;
 	} 
@@ -209,6 +212,7 @@ void display_temp_humi() {
 	sprintf(msg, "Humi : %d.%d %%", datas[0], datas[1]);
 	oled_show_string(4,2,msg);;
 	HAL_Delay(500);
+	*/
 }
 
 void init() {
@@ -216,7 +220,10 @@ void init() {
 	HAL_UART_Receive_IT(&huart1, &buf, 1);
 	//开启pwm，并旋转至最前方
 	sg90_init();
-	paj7620_init();
+	//HAL_Delay(1000);
+	//turn_180_degree();
+	//paj7620_init();
+	//HAL_Delay(10000);
 	//初始化oled
 	oled_init();
 	oled_clear_all();
@@ -227,11 +234,12 @@ void init() {
 	
 }
 
+
 void reset() {
 	if(runMode == followMode || runMode == tracingMode || runMode == avoidMode || runMode == gestureMode) {
-		HAL_TIM_Base_Start_IT(&htim3);
+		//HAL_TIM_Base_Start_IT(&htim3);
 	} else {
-		HAL_TIM_Base_Stop_IT(&htim3);
+		//HAL_TIM_Base_Stop_IT(&htim3);
 	}
 	if(runMode != tracingMode) {
 		//切换到其它模式，将舵机指向正前方
@@ -239,4 +247,3 @@ void reset() {
 	}
 }
 
-*/

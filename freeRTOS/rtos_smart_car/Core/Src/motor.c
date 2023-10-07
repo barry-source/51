@@ -47,7 +47,7 @@ void changeMode(uint8_t m) {
 		MX_TIM2_Init();
 		HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
 		HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_2);
-		HAL_Delay(500);
+		HAL_Delay(100);
 	}
 }
 
@@ -58,8 +58,8 @@ void forward() {
 		Right_A1A_W_0();
 		Right_A1B_W_1();
 	} else {
-		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,10);
-		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,13);
+		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1,19);
+		__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_2,16);
 	}
 }
 

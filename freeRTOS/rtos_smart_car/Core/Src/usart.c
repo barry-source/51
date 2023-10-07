@@ -21,7 +21,14 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+#include "su03.h"
+#include "string.h"
 
+#define UART1_REC_LEN 200
+uint16_t UART1_RX_STA=0;
+uint8_t buf=0;
+// 接收缓冲, 串口接收到的数据放在这个数组里，最大UART1_REC_LEN个字节
+uint8_t UART1_RX_Buffer[UART1_REC_LEN];
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -83,6 +90,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+    /* USART1 interrupt Init */
+    HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspInit 1 */
 
   /* USER CODE END USART1_MspInit 1 */
@@ -106,6 +116,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9|GPIO_PIN_10);
 
+    /* USART1 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspDeInit 1 */
 
   /* USER CODE END USART1_MspDeInit 1 */
@@ -114,4 +126,49 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
+	if(huart->Instance != USART1) {
+		return;
+	}
+	// 数据接收完成
+	if((UART1_RX_STA & 0x8000) != 0) {
+		HAL_UART_Receive_IT(&huart1, &buf, 1);
+		return;
+	}
+	
+	// 接收到回车之后判断后续的是不是换行，如果是换行，数据接收完成，但是还要开启一下中断
+	if(UART1_RX_STA&0x4000) {
+		if(buf == 0x0a) {
+			UART1_RX_STA = UART1_RX_STA| 0x8000;
+			if(!strcmp((const char *)UART1_RX_Buffer, "M0")) {
+				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_8);
+				runMode = stopMode;
+			} else if(!strcmp((const char *)UART1_RX_Buffer, "M1")) {
+				runMode = tracingMode;
+			} else if(!strcmp((const char *)UART1_RX_Buffer, "M2")) {
+				runMode = avoidMode;
+			} else if(!strcmp((const char *)UART1_RX_Buffer, "M3")) {
+				runMode = followMode;
+			} else {
+				runMode = stopMode;
+			}
+			memset(UART1_RX_Buffer, 0, UART1_REC_LEN);
+			UART1_RX_STA = 0;
+		} else {
+			UART1_RX_STA = 0;
+		}
+	} else {
+		// 接收到回车，将高第二位置1，否则继续接收数据
+		if(buf == 0x0d) {
+			UART1_RX_STA |= 0x4000;
+		} else {
+			UART1_RX_Buffer[UART1_RX_STA&0x3fff] = buf;
+			UART1_RX_STA ++;
+			if(UART1_RX_STA > UART1_REC_LEN - 1) {
+				UART1_RX_STA = 0;
+			}
+		}
+	}
+	HAL_UART_Receive_IT(&huart1, &buf, 1);
+}
 /* USER CODE END 1 */

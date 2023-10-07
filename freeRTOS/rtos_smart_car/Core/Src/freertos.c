@@ -50,10 +50,7 @@
 
 /* USER CODE END Variables */
 osThreadId AvoidHandle;
-osThreadId TracingHandle;
-osThreadId FollowHandle;
 osThreadId MicrophoneHandle;
-osThreadId GestureHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -61,10 +58,7 @@ osThreadId GestureHandle;
 /* USER CODE END FunctionPrototypes */
 
 void TaskAvoid(void const * argument);
-void TaskTracing(void const * argument);
-void TaskFollow(void const * argument);
 void TaskMicrophone(void const * argument);
-void TaskGesture(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -115,28 +109,13 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(Avoid, TaskAvoid, osPriorityNormal, 0, 128);
   AvoidHandle = osThreadCreate(osThread(Avoid), NULL);
 
-  /* definition and creation of Tracing */
-  osThreadDef(Tracing, TaskTracing, osPriorityLow, 0, 128);
-  TracingHandle = osThreadCreate(osThread(Tracing), NULL);
-
-  /* definition and creation of Follow */
-  osThreadDef(Follow, TaskFollow, osPriorityLow, 0, 128);
-  FollowHandle = osThreadCreate(osThread(Follow), NULL);
-
   /* definition and creation of Microphone */
   osThreadDef(Microphone, TaskMicrophone, osPriorityNormal, 0, 128);
   MicrophoneHandle = osThreadCreate(osThread(Microphone), NULL);
 
-  /* definition and creation of Gesture */
-  osThreadDef(Gesture, TaskGesture, osPriorityLow, 0, 128);
-  GestureHandle = osThreadCreate(osThread(Gesture), NULL);
-
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-	vTaskSuspend(AvoidHandle);
-	vTaskSuspend(TracingHandle);
-	vTaskSuspend(FollowHandle);
-	//vTaskSuspend(GestureHandle);
+	vTaskSuspend(AvoidHandle);;
 	
 	
   /* USER CODE END RTOS_THREADS */
@@ -156,47 +135,9 @@ void TaskAvoid(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-		forward();
     osDelay(1);
   }
   /* USER CODE END TaskAvoid */
-}
-
-/* USER CODE BEGIN Header_TaskTracing */
-/**
-* @brief Function implementing the Tracing thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_TaskTracing */
-void TaskTracing(void const * argument)
-{
-  /* USER CODE BEGIN TaskTracing */
-  /* Infinite loop */
-  for(;;)
-  {
-		//forward();
-    osDelay(100);
-  }
-  /* USER CODE END TaskTracing */
-}
-
-/* USER CODE BEGIN Header_TaskFollow */
-/**
-* @brief Function implementing the Follow thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_TaskFollow */
-void TaskFollow(void const * argument)
-{
-  /* USER CODE BEGIN TaskFollow */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END TaskFollow */
 }
 
 /* USER CODE BEGIN Header_TaskMicrophone */
@@ -221,7 +162,7 @@ void TaskMicrophone(void const * argument)
 		*/
 		taskENTER_CRITICAL();
 		get_mode();
-		//reset();
+		reset();
 		taskEXIT_CRITICAL();
 		switch(runMode) {
 			case tracingMode: 
@@ -246,27 +187,6 @@ void TaskMicrophone(void const * argument)
     osDelay(100);
   }
   /* USER CODE END TaskMicrophone */
-}
-
-/* USER CODE BEGIN Header_TaskGesture */
-/**
-* @brief Function implementing t he Gesture thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_TaskGesture */
-void TaskGesture(void const * argument)
-{
-  /* USER CODE BEGIN TaskGesture */
-  /* Infinite loop */
-  for(;;)
-  {
-		
-		//if(runMode != gestureMode) return ;
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_8);
-    osDelay(100);
-  }
-  /* USER CODE END TaskGesture */
 }
 
 /* Private application code --------------------------------------------------*/

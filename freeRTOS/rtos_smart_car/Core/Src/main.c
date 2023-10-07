@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -28,6 +29,9 @@
 #include <string.h>
 #include <stdio.h>
 #include "motor.h"
+#include "car_function.h"
+#include "sr04.h"
+#include "iic_paj7620.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,6 +62,37 @@ int fputc(int ch, FILE *file) {
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	/*
+	//Âö³å²âËÙ
+	if(GPIO_Pin == GPIO_PIN_10) {
+		if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10) == GPIO_PIN_RESET)
+			speedCnt++;
+	}
+	*/
+	//³¬Éù²¨echo
+	if(GPIO_Pin == GPIO_PIN_12) {
+		//while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_RESET);
+		HAL_TIM_Base_Start(&htim1);
+		__HAL_TIM_SetCounter(&htim1, 0);
+		
+		while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_SET);
+		HAL_TIM_Base_Stop(&htim1);
+		
+		int cnt = __HAL_TIM_GetCounter(&htim1);
+		distance = 340 * 0.000001 * cnt * 100 / 2;
+	}
+	
+	//ÊÖÊÆÖÐ¶Ï
+	if(GPIO_Pin == GPIO_PIN_7) {
+		uint16_t gCode = 0;
+		gCode = paj7620_get_gesture();
+		status = gCode;
+		printf("%d====¡·", gCode);
+	}
+	
+}
+
 
 /* USER CODE END PFP */
 
@@ -96,10 +131,13 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_TIM2_Init();
+  MX_I2C1_Init();
+  MX_TIM1_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-	printf("ok\r\n");
+	init();
 	changeMode(NORMAL);
-	
+	printf("ok\r\n");
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
