@@ -143,12 +143,10 @@ void TaskMicrophone(void const * argument)
 			printf("4");
 				break;
 			case testMode:
-				//test();
-			printf("5");
+				test();
 				break;
 			case stopMode:
-				//stop_car();
-			printf("6");
+				stop_car();
 				break;
 		}
     osDelay(10);

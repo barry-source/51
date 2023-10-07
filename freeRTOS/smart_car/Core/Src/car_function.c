@@ -151,7 +151,6 @@ void traceing() {
 }
 
 void stop_car() {
-	/*
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		oled_clear_1_line();
@@ -159,7 +158,6 @@ void stop_car() {
 		// 主要是复原舵机正前方
 		reset();
 	}
-	*/
 }
 
 void gesture() {
@@ -177,7 +175,6 @@ void gesture() {
 }
 
 void test() { 
-	/*
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
@@ -186,7 +183,6 @@ void test() {
 		oled_show_string(1,2,"mode : test");
 		HAL_Delay(500);
 	}
-	*/
 }
 	
 void display_temp_humi() {
