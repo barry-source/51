@@ -128,14 +128,15 @@ void avoid() {
 }
 
 void traceing() {
-	/*
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(PWM);
 		HAL_Delay(500);
+		/*
 		// ¥¶¿Ìoled
 		oled_clear_1_line();
 		oled_show_string(1,2,"mode : trace");
+		*/
 	}
 
 	if(leftTraceValue() == GPIO_PIN_RESET && rightTraceValue() == GPIO_PIN_RESET) {
@@ -150,7 +151,6 @@ void traceing() {
 	if(leftTraceValue() == GPIO_PIN_SET && rightTraceValue() == GPIO_PIN_SET) {
 		stop();
 	}
-	*/
 }
 
 void stop_car() {

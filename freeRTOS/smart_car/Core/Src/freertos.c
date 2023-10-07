@@ -129,8 +129,7 @@ void TaskMicrophone(void const * argument)
 		//reset();
 		switch(runMode) {
 			case tracingMode:
-					printf("1");
-				//traceing();
+				traceing();
 				break;
 			case followMode:
 				follow();
