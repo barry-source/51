@@ -22,7 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "string.h"
-//#include "su03.h"
+#include "su03.h"
 
 #define UART1_REC_LEN 200
 uint16_t UART1_RX_STA=0;
@@ -140,15 +140,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 			UART1_RX_STA = UART1_RX_STA| 0x8000;
 			if(!strcmp((const char *)UART1_RX_Buffer, "M0")) {
 				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_8);
-				//runMode = stopMode;
+				runMode = gestureMode;
 			} else if(!strcmp((const char *)UART1_RX_Buffer, "M1")) {
-				//runMode = tracingMode;
+				runMode = tracingMode;
 			} else if(!strcmp((const char *)UART1_RX_Buffer, "M2")) {
-				//runMode = avoidMode;
+				runMode = avoidMode;
 			} else if(!strcmp((const char *)UART1_RX_Buffer, "M3")) {
-				//runMode = followMode;
+				runMode = followMode;
 			} else {
-				//runMode = stopMode;
+				runMode = stopMode;
 			}
 			memset(UART1_RX_Buffer, 0, UART1_REC_LEN);
 			UART1_RX_STA = 0;

@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "su03.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -124,7 +124,35 @@ void TaskMicrophone(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+		get_mode();
+		//reset();
+		switch(runMode) {
+			case tracingMode:
+					printf("1");
+				//traceing();
+				break;
+			case followMode:
+				//follow();
+			printf("2");
+				break;
+			case avoidMode:
+				//avoid();
+			printf("3");
+				break;
+			case gestureMode:
+				//gesture();
+			printf("4");
+				break;
+			case testMode:
+				//test();
+			printf("5");
+				break;
+			case stopMode:
+				//stop_car();
+			printf("6");
+				break;
+		}
+    osDelay(10);
   }
   /* USER CODE END TaskMicrophone */
 }

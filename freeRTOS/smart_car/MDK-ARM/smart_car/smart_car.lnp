@@ -1,5 +1,6 @@
 --cpu Cortex-M3
 "smart_car\startup_stm32f103xb.o"
+"smart_car\su03.o"
 "smart_car\main.o"
 "smart_car\gpio.o"
 "smart_car\freertos.o"
