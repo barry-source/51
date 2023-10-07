@@ -1,0 +1,12 @@
+smart_car\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/list.c
+smart_car\list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+smart_car\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+smart_car\list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+smart_car\list.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+smart_car\list.o: ../Core/Inc/FreeRTOSConfig.h
+smart_car\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+smart_car\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+smart_car\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+smart_car\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+smart_car\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+smart_car\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
