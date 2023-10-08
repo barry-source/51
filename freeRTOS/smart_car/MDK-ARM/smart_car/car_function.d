@@ -41,3 +41,4 @@ smart_car\car_function.o: ../Core/Inc/sg90.h
 smart_car\car_function.o: ../Core/Inc/sr04.h
 smart_car\car_function.o: ../Core/Inc/tim.h
 smart_car\car_function.o: ../Core/Inc/iic_paj7620.h
+smart_car\car_function.o: ../Core/Inc/dht11.h

@@ -10,11 +10,9 @@
 #include "sr04.h"
 #include "tim.h"
 #include "iic_paj7620.h"
-
-/*
 #include "dht11.h"
 
-
+/*
 */
 
 #define MIDDLE 0
@@ -155,6 +153,7 @@ void stop_car() {
 		// 主要是复原舵机正前方
 		reset();
 	}
+	display_temp_humi();
 }
 
 void gesture() {
@@ -181,13 +180,12 @@ void test() {
 }
 	
 void display_temp_humi() {
-	/*
 	if(runMode != stopMode) {
 		return;
 	} 
 	count = 0;
 	//记得关中断，否则会影响DHT11采集数据
-	HAL_TIM_Base_Stop_IT(&htim3);
+	//HAL_TIM_Base_Stop_IT(&htim3);
 	char msg[16];
 	
 	uint8_t result = trig_dht();
@@ -200,7 +198,6 @@ void display_temp_humi() {
 	sprintf(msg, "Humi : %d.%d %%", datas[0], datas[1]);
 	oled_show_string(4,2,msg);;
 	HAL_Delay(500);
-	*/
 }
 
 void init() {
