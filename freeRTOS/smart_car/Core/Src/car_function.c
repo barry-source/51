@@ -9,11 +9,12 @@
 #include "sg90.h"
 #include "sr04.h"
 #include "tim.h"
+#include "iic_paj7620.h"
 
 /*
 #include "dht11.h"
 
-#include "iic_paj7620.h"
+
 */
 
 #define MIDDLE 0
@@ -157,7 +158,6 @@ void stop_car() {
 }
 
 void gesture() {
-	/*
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
@@ -167,7 +167,6 @@ void gesture() {
 		HAL_Delay(500);
 	}
 	paj7620_action();
-	*/
 }
 
 void test() { 
@@ -210,7 +209,9 @@ void init() {
 	
 	//开启pwm，并旋转至最前方
 	sg90_init();
-	//paj7620_init();
+	HAL_Delay(100);
+	paj7620_init();
+	HAL_Delay(100);
 	//初始化oled
 	oled_init();
 	oled_clear_all();
@@ -256,7 +257,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		int cnt = __HAL_TIM_GetCounter(&htim1);
 		distance = 340 * 0.000001 * cnt * 100 / 2;
 	}
-	/*
 	//手势中断
 	if(GPIO_Pin == GPIO_PIN_7) {
 		uint16_t gCode = 0;
@@ -264,5 +264,4 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		status = gCode;
 		printf("%d====》", gCode);
 	}
-	*/
 }

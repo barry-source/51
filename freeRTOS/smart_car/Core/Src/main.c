@@ -101,8 +101,8 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-	init();
 	printf("OK\r\n");
+	init();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

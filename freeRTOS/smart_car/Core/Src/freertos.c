@@ -126,7 +126,7 @@ void TaskMicrophone(void const * argument)
   for(;;)
   {
 		get_mode();
-		//reset();
+		reset();
 		switch(runMode) {
 			case tracingMode:
 				traceing();
@@ -138,8 +138,7 @@ void TaskMicrophone(void const * argument)
 				avoid();
 				break;
 			case gestureMode:
-				//gesture();
-			printf("4");
+				gesture();
 				break;
 			case testMode:
 				test();

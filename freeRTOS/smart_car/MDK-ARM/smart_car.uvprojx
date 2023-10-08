@@ -429,6 +429,16 @@
               <FilePath>..\Core\Src\sr04.c</FilePath>
             </File>
             <File>
+              <FileName>iic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\iic.c</FilePath>
+            </File>
+            <File>
+              <FileName>iic_paj7620.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\iic_paj7620.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
