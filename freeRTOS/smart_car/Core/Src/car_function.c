@@ -5,15 +5,11 @@
 #include "su03.h"
 #include "sensor.h"
 #include "motor.h"
-#include "oled.h"
 #include "sg90.h"
 #include "sr04.h"
 #include "tim.h"
 #include "iic_paj7620.h"
 #include "dht11.h"
-
-/*
-*/
 
 #define MIDDLE 0
 #define LEFT 1
@@ -34,10 +30,19 @@ enum Mode lastMode = stopMode;
 // 温湿度不能频繁刷新，影响小车的运行，计次刷新一次
 uint32_t count = 0;
 
+//速度
+unsigned int speedCnt;
+char speedString[24];
+
+// 保存速度任务Handle
+osTimerId SpeedHandle;
+
 void follow() {
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
+		speedCnt = 0;
+		osTimerStart(SpeedHandle, 1000);
 		// 处理oled
 		oled_clear_1_line();
 		oled_show_string(1,2,"mode : follow");
@@ -62,6 +67,8 @@ void avoid() {
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
+		speedCnt = 0;
+		osTimerStart(SpeedHandle, 1000);
 		// 处理oled
 		oled_clear_1_line();
 		oled_show_string(1,2,"mode : avoid");
@@ -126,6 +133,8 @@ void traceing() {
 		lastMode = runMode;
 		changeMode(PWM);
 		HAL_Delay(500);
+		speedCnt = 0;
+		osTimerStart(SpeedHandle, 1000);
 		// 处理oled
 		oled_clear_1_line();
 		oled_show_string(1,2,"mode : trace");
@@ -148,6 +157,9 @@ void traceing() {
 void stop_car() {
 	if(runMode != lastMode) {
 		lastMode = runMode;
+		speedCnt = 0;
+		osTimerStop(SpeedHandle);
+		speedCnt = 0;
 		oled_clear_1_line();
 		oled_show_string(1,2, "mode : stop");
 		// 主要是复原舵机正前方
@@ -160,6 +172,8 @@ void gesture() {
 	if(runMode != lastMode) {
 		lastMode = runMode;
 		changeMode(NORMAL);
+		speedCnt = 0;
+		osTimerStart(SpeedHandle, 1000);
 		// 处理oled
 		oled_clear_1_line();
 		oled_show_string(1,2,"mode : gesture");
@@ -200,6 +214,10 @@ void display_temp_humi() {
 	HAL_Delay(500);
 }
 
+void initTask(osTimerId SpeedTimerHandle) {
+	SpeedHandle = SpeedTimerHandle;
+}
+
 void init() {
 	//开启串口中断蓝牙在用
 	HAL_UART_Receive_IT(&huart1, &buf, 1);
@@ -230,18 +248,18 @@ void reset() {
 		//切换到其它模式，将舵机指向正前方
 		turn_90_degree();
 	}
+	//停止小车
+	stop();
 }
 
 //////////////////////////中断/////////////////////////////
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	/*
 	//脉冲测速
 	if(GPIO_Pin == GPIO_PIN_10) {
 		if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10) == GPIO_PIN_RESET)
 			speedCnt++;
 	}
-	*/
 	//超声波echo
 	if(GPIO_Pin == GPIO_PIN_12) {
 		//while(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_RESET);

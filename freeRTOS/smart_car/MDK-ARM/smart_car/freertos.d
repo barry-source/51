@@ -45,3 +45,5 @@ smart_car\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.
 smart_car\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 smart_car\freertos.o: ../Core/Inc/su03.h
 smart_car\freertos.o: ../Core/Inc/car_function.h
+smart_car\freertos.o: ../Core/Inc/oled.h
+smart_car\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

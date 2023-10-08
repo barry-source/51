@@ -49,3 +49,5 @@ smart_car\main.o: ../Core/Inc/usart.h
 smart_car\main.o: ../Core/Inc/gpio.h
 smart_car\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 smart_car\main.o: ../Core/Inc/car_function.h
+smart_car\main.o: ../Core/Inc/oled.h
+smart_car\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

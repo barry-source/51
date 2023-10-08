@@ -49,6 +49,7 @@
 
 /* USER CODE END Variables */
 osThreadId MicrophoneHandle;
+osTimerId SpeedTimerHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -56,11 +57,15 @@ osThreadId MicrophoneHandle;
 /* USER CODE END FunctionPrototypes */
 
 void TaskMicrophone(void const * argument);
+void SpeedCallback(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+
+/* GetTimerTaskMemory prototype (linked to static allocation support) */
+void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize );
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
@@ -74,6 +79,19 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
   /* place for user code */
 }
 /* USER CODE END GET_IDLE_TASK_MEMORY */
+
+/* USER CODE BEGIN GET_TIMER_TASK_MEMORY */
+static StaticTask_t xTimerTaskTCBBuffer;
+static StackType_t xTimerStack[configTIMER_TASK_STACK_DEPTH];
+
+void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize )
+{
+  *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
+  *ppxTimerTaskStackBuffer = &xTimerStack[0];
+  *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+  /* place for user code */
+}
+/* USER CODE END GET_TIMER_TASK_MEMORY */
 
 /**
   * @brief  FreeRTOS initialization
@@ -92,6 +110,11 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
+
+  /* Create the timer(s) */
+  /* definition and creation of SpeedTimer */
+  osTimerDef(SpeedTimer, SpeedCallback);
+  SpeedTimerHandle = osTimerCreate(osTimer(SpeedTimer), osTimerPeriodic, NULL);
 
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
@@ -122,6 +145,7 @@ void MX_FREERTOS_Init(void) {
 void TaskMicrophone(void const * argument)
 {
   /* USER CODE BEGIN TaskMicrophone */
+	initTask(SpeedTimerHandle);
   /* Infinite loop */
   for(;;)
   {
@@ -150,6 +174,17 @@ void TaskMicrophone(void const * argument)
     osDelay(10);
   }
   /* USER CODE END TaskMicrophone */
+}
+
+/* SpeedCallback function */
+void SpeedCallback(void const * argument)
+{
+  /* USER CODE BEGIN SpeedCallback */
+	sprintf(speedString, "speed:%4dcm/s", speedCnt);
+	//old__clear_bottom_half();
+	oled_show_string(2,2,speedString);
+	speedCnt = 0;
+  /* USER CODE END SpeedCallback */
 }
 
 /* Private application code --------------------------------------------------*/
