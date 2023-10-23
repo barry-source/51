@@ -33,3 +33,4 @@ smart_car\main.o: ../Core/Inc/usart.h
 smart_car\main.o: ../Core/Inc/gpio.h
 smart_car\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 smart_car\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+smart_car\main.o: ../Core/Inc/motor.h
