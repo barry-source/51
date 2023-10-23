@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -26,6 +27,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "motor.h"
+#include "sg90.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,8 +95,10 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+  MX_TIM11_Init();
   /* USER CODE BEGIN 2 */
-	hor_rightward();
+	//hor_rightward();
+	sg90_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -28,9 +28,13 @@ smart_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 smart_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 smart_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 smart_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+smart_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+smart_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 smart_car\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+smart_car\main.o: ../Core/Inc/tim.h
 smart_car\main.o: ../Core/Inc/usart.h
 smart_car\main.o: ../Core/Inc/gpio.h
 smart_car\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 smart_car\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 smart_car\main.o: ../Core/Inc/motor.h
+smart_car\main.o: ../Core/Inc/sg90.h

@@ -6,20 +6,6 @@
 // B1B--->A0---->TIM2_CH1
 
 
-//#define Left_B1A_W_1() HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET)
-//#define Left_B1A_W_0() HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET)
-//#define Left_B1B_W_1() HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET)
-//#define Left_B1B_W_0() HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET)
-//#define Left_B1B_W_1() HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_SET)
-//#define Left_B1B_W_0() HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, GPIO_PIN_RESET)
-
-//#define Right_A1A_W_1() HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET)
-//#define Right_A1A_W_0() HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET)
-//#define Right_A1B_W_1() HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET)
-//#define Right_A1B_W_0() HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET)
-//#define Right_A1B_W_1() HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET)
-//#define Right_A1B_W_0() HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET)
-
 // 小车右后为A，右前为B，左后为C，左前为D,所有电平默认都是低电平
 // 左前
 #define Left_D1A_W_1() HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET)	
